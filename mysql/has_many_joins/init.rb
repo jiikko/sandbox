@@ -1,8 +1,8 @@
-require "active_record"
 require "mysql2"
+require "active_record"
 require 'sugoi_bulk_insert'
 
-DB_NAME = "join_training"
+DB_NAME = "has_many_joins"
 
 puts `echo 'drop database #{DB_NAME}' | mysql -uroot`
 puts `echo 'create database #{DB_NAME}' | mysql -uroot`
@@ -26,14 +26,6 @@ ActiveRecord::Migration.add_index :employees, :department_id
 ActiveRecord::Migration.create_table :departments do |t|
   t.string :name
 end
-ActiveRecord::Migration.create_table :comments do |t|
-  t.string :commentable_type
-  t.integer :commentable_id
-  t.string :title
-  t.text :body
-end
-ActiveRecord::Migration.add_index :comments, [:commentable_type, :commentable_id]
-
 
 class Employee < ActiveRecord::Base; end
 class Department  < ActiveRecord::Base;
@@ -59,13 +51,3 @@ d = Department.create!(name:  '営業')
 10_000.times do
   Employee.create!(name: '新人')
 end
-
-
-b = SugoiBulkInsert.new(table_name: "comments", count: 30000) do |x|
-  x.column :commentable_type, %w(AAA VVV CCC GGG)
-  x.column :commentable_id, 1..300
-  x.column :title, 'aaaa'
-  x.column :body, 'aaaa'
-end
-600.times { b.fire }
-b.fire

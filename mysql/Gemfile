@@ -2,5 +2,5 @@
 source "https://rubygems.org"
 
 gem "activerecord"
-gem "mysql2"
-gem "sugoi_bulk_insert", github: 'jiikko/sugoi_bulk_insert'
+gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem "sugoi_bulk_insert"

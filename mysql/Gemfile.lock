@@ -1,9 +1,3 @@
-GIT
-  remote: git://github.com/jiikko/sugoi_bulk_insert.git
-  revision: b969bbd0cf8d4e98f229c9f78f5441ea1e0a8711
-  specs:
-    sugoi_bulk_insert (0.1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -26,6 +20,7 @@ GEM
     json (1.8.3)
     minitest (5.8.3)
     mysql2 (0.4.2)
+    sugoi_bulk_insert (0.1.0)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -35,8 +30,8 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
-  mysql2
-  sugoi_bulk_insert!
+  mysql2 (>= 0.3.18, < 0.5)
+  sugoi_bulk_insert
 
 BUNDLED WITH
    1.11.2
