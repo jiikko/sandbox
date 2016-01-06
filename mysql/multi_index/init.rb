@@ -34,8 +34,6 @@ end
 class Department < ActiveRecord::Base
   has_many :employees
 end
-class Comment < ActiveRecord::Base
-end
 
 b = SugoiBulkInsert.new(table_name: "employees", count: 100000) do |x|
   x.column :name, 'aaaa'
@@ -44,5 +42,6 @@ b = SugoiBulkInsert.new(table_name: "employees", count: 100000) do |x|
 end
 6.times { b.fire }
 
+# 複合インデックスは順番が大事
 Employee.where(account_id: 3)     # インデックス聞く
 Employee.where(department_id: 3)  # 効かない

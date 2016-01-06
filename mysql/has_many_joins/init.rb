@@ -33,8 +33,6 @@ end
 class Department  < ActiveRecord::Base;
   has_many :employees
 end
-class Comment < ActiveRecord::Base
-end
 
 
 # 部署1と社員1
