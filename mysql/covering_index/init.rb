@@ -1,9 +1,4 @@
-# cd ./mysql/covering_index
-# $ bunsle exec irb
-# require "covering_index/init"
-
 DB_NAME = "covering_index"
-
 require './mysql_helper'
 
 ActiveRecord::Migration.create_table :employees do |t|
