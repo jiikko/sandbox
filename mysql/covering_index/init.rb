@@ -1,4 +1,4 @@
-DB_NAME = "covering_index"
+@db_name = "covering_index"
 require './mysql_helper'
 
 ActiveRecord::Migration.create_table :employees do |t|
