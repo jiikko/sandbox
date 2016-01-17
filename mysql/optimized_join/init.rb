@@ -1,3 +1,6 @@
+@db_name = __FILE__
+require './mysql_helper'
+
 ActiveRecord::Migration.create_table :employees do |t|
   t.string :name
   t.integer :department_id
