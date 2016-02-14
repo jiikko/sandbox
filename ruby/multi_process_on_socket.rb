@@ -48,15 +48,12 @@ class Master
     fork {
       worker = Worker.new(@sock_path, @block)
       worker.work!
-      @sock.close
       exit 0
     }
   end
 end
 
 class ParallelArray
-  include Enumerable
-
   def initialize(list, concurrency: 1)
     @list = list
     @concurrency = concurrency
@@ -64,38 +61,36 @@ class ParallelArray
 
   def each(&block)
     master = Master.new(&block)
-    @concurrency.times { master.new_worker!  }
+    @concurrency.times { master.new_worker! }
     loop {
       break if @list.empty?
-      puts @list.inspect
       # http://docs.ruby-lang.org/ja/2.3.0/method/IO/s/select.html
       if IO.select([master.sock], nil, nil, 1).nil?
         puts '待ちます'
       else
         s = master.sock.accept
         if s.read(3) == 'POP'
-          item = @list.pop
-          path = "/tmp/mp_#{$$}"
-          s.write(Marshal.dump(item))
-          s.close
+          s.write(Marshal.dump(@list.pop))
         else
           raise('okashi')
         end
+        s.close
       end
     }
-    master.sock.close unless master.sock.closed?
     @list
+  ensure
+    master.sock.close unless master.sock.closed?
   end
 end
 
 
 list = [
-  1, 3, 5
+  *(1..10).to_a
 ]
 
-ParallelArray.new(list, concurrency: 5).each do |item|
-  msg = "---in worker------"
-  msg << "私は#{$$}"
+ParallelArray.new(list, concurrency: 4).each do |item|
+  msg = "[debug] "
+  msg << "pid: #{$$} "
   msg << item.class.to_s
   msg << item.to_s
   puts msg
