@@ -1,4 +1,8 @@
 require 'open-uri'
+require 'socket'
+require 'pry'
+require 'tempfile'
+`rm /tmp/.mp`
 
 URLS = [
   # analiticsで取得する
@@ -7,56 +11,92 @@ HOST = ''
 CONCURRENCY = 10
 
 class Worker
-  def initialize(sock_path)
-    @sock = UnixSocket.new(sock_path)
+  def initialize(sock_path, block)
+    @sock_path = sock_path
+    @block = block
   end
 
   def work!
     loop {
-      data = @sock.read
-      if data
-        get_request(data)
-      else
+      sock = UNIXSocket.open(@sock_path)
+      sock.puts('POP')
+      if IO.select([sock], nil, nil, 1.0).nil?
         break
+      else
+        data = sock.read(65536)
+        if data.nil?
+          break
+        else
+          @block.call(Marshal.load(data))
+        end
       end
+      sock.close
     }
-  end
-
-  private
-
-  def get_request(url)
-    open() do
-    end
   end
 end
 
 class Master
-  def initialize(urls)
+  attr_accessor :sock
+
+  def initialize(&block)
+    @block = block
     @sock_path = '/tmp/.mp'
-    @sock = UnixServer.new(@sock_path)
-    @urls = urls
+    @sock = UNIXServer.new(@sock_path)
   end
 
-  def pop_url
-    @urls.pop
-  end
-
-  def new_worker
+  def new_worker!
     fork {
-      worker = Worker.new(sock_path)
+      worker = Worker.new(@sock_path, @block)
       worker.work!
+      @sock.close
       exit 0
     }
   end
+end
 
-  private
+class ParallelArray
+  include Enumerable
 
-  def sock_path
-    @sock_path
+  def initialize(list, concurrency: 1)
+    @list = list
+    @concurrency = concurrency
+  end
+
+  def each(&block)
+    master = Master.new(&block)
+    @concurrency.times { master.new_worker!  }
+    loop {
+      break if @list.empty?
+      puts @list.inspect
+      # http://docs.ruby-lang.org/ja/2.3.0/method/IO/s/select.html
+      if IO.select([master.sock], nil, nil, 1).nil?
+        puts '待ちます'
+      else
+        s = master.sock.accept
+        if s.read(3) == 'POP'
+          item = @list.pop
+          path = "/tmp/mp_#{$$}"
+          s.write(Marshal.dump(item))
+          s.close
+        else
+          raise('okashi')
+        end
+      end
+    }
+    master.sock.close unless master.sock.closed?
+    @list
   end
 end
 
-master = Master.new(urls)
-concurrency.times {
-  master.fork_worker!
-}
+
+list = [
+  1, 3, 5
+]
+
+ParallelArray.new(list, concurrency: 5).each do |item|
+  msg = "---in worker------"
+  msg << "私は#{$$}"
+  msg << item.class.to_s
+  msg << item.to_s
+  puts msg
+end
