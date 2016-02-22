@@ -1,0 +1,9 @@
+= link_to "新規作成",  new_docler_container_path
+table.table border=1
+  tr
+    th name
+    th
+  tr
+    - @docker_containers.each do |docler_container|
+      td = link_to docler_container.name, docler_container
+      td
