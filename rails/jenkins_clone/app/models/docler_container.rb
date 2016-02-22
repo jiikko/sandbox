@@ -8,12 +8,11 @@ ls
     system(cmd)
   end
 
-  def run
-    ensure_run do
-    end
-  end
-
-  def ensure_run
-    yield
+  def hai
+    `ls`
+    `ls`
+    `ls`
+    `ls`
+    self.update_column(:log, "out.sting")
   end
 end
