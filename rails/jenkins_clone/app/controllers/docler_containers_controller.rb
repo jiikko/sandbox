@@ -17,6 +17,7 @@ class DoclerContainersController < ApplicationController
   end
 
   def show
+    @docker_container = DoclerContainer.find(params[:id])
   end
 
   private

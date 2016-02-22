@@ -11,13 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222122947) do
+ActiveRecord::Schema.define(version: 20160222211804) do
 
   create_table "command_templates", force: :cascade do |t|
     t.string   "name"
     t.string   "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "dependency_cmds"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "container_commands", force: :cascade do |t|
+    t.integer  "container_id",        null: false
+    t.integer  "command_template_id", null: false
+    t.string   "name"
+    t.string   "body"
+    t.string   "dependency_cmds"
+    t.text     "log"
+    t.integer  "status_code"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  create_table "containers", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "prosess_count"
+    t.text     "log"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
