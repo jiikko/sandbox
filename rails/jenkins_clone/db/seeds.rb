@@ -1,28 +1,25 @@
 attrs = [
   { name: :create,
-    body: <<-CMD
+    script: <<-CMD
 docker ps
 ls
   CMD
   },
   { name: :chckout_brach,
-    dependency_cmds: [:create],
-    body: <<-CMD
+    script: <<-CMD
 git checkout %{branch_name}
     CMD
-  },
+ belongs_to },
   { name: :start_worker,
-    dependency_cmds: [:create],
-    body: <<-CMD
+    script: <<-CMD
 test-queue
     CMD
   },
   { name: :destroy,
-    dependency_cmds: [:create],
-    body: <<-CMD
+    script: <<-CMD
 docker rm -f %{dontainar_name}
     CMD
   }
 ]
 
-CommandTemplate.create!(attrs)
+TemplateJob.create!(attrs)

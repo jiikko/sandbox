@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223154033) do
+ActiveRecord::Schema.define(version: 20160223225004) do
 
   create_table "command_templates", force: :cascade do |t|
     t.string   "name"
@@ -51,9 +51,18 @@ ActiveRecord::Schema.define(version: 20160223154033) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "job_queues", force: :cascade do |t|
+  create_table "executable_jobs", force: :cascade do |t|
     t.integer  "container_id",    null: false
-    t.integer  "job_template_id", null: false
+    t.integer  "template_job_id", null: false
+    t.string   "name"
+    t.text     "script"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "queued_jobs", force: :cascade do |t|
+    t.integer  "container_id",    null: false
+    t.integer  "template_job_id", null: false
     t.string   "name"
     t.text     "script"
     t.text     "log"
@@ -62,7 +71,9 @@ ActiveRecord::Schema.define(version: 20160223154033) do
     t.datetime "updated_at",      null: false
   end
 
-  create_table "job_templates", force: :cascade do |t|
+  create_table "template_jobs", force: :cascade do |t|
+    t.string   "name"
+    t.text     "script"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

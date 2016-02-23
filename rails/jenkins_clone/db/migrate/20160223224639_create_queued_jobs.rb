@@ -1,8 +1,8 @@
-class CreateJobQueues < ActiveRecord::Migration
+class CreateQueuedJobs < ActiveRecord::Migration
   def change
-    create_table :job_queues do |t|
+    create_table :queued_jobs do |t|
       t.references :container, null: false
-      t.references :job_template, null: false
+      t.references :template_job, null: false
       t.string :name
       t.text :script
       t.text :log

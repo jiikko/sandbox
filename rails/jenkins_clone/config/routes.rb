@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  root 'docler_containers#index'
-  resources :docler_containers
+  root 'containers#index'
 
   resources :containers do
-    resources :job_queues, shallow: true
+    resources :queued_jobs, shallow: true
+    member do
+      post :execute
+    end
   end
-  resources :job_templates
+  resources :template_jobs
 end
