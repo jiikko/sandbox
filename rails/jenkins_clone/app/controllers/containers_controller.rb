@@ -22,8 +22,8 @@ class ContainersController < ApplicationController
 
   def execute
     @container = Container.find(params[:id])
-    @container.executable_jobs.find_by(name: params[:job_name]).execute!
-    redirect_to @container
+    queued_job = @container.executable_jobs.find_by(name: params[:job_name]).execute!
+    redirect_to queued_job
   end
 
   private
