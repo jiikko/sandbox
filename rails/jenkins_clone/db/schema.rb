@@ -61,14 +61,13 @@ ActiveRecord::Schema.define(version: 20160223225004) do
   end
 
   create_table "queued_jobs", force: :cascade do |t|
-    t.integer  "container_id",    null: false
-    t.integer  "template_job_id", null: false
+    t.integer  "container_id", null: false
     t.string   "name"
     t.text     "script"
     t.text     "log"
     t.integer  "status"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "template_jobs", force: :cascade do |t|

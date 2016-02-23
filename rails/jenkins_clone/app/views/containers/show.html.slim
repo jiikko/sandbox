@@ -1,8 +1,16 @@
 = @container.name
 
-- @container.executable_jobs.each do |job_queue|
-  = link_to t("job_queue.#{job_queue.name}"), run_container_path(job_name: job_queue.name)
+h4 executable jobs
+- @container.executable_jobs.each do |job|
+  p = link_to job.name, execute_container_path(job_name: job.name), method: :post
 
+hr
+h4 queued jobs
+- @container.queued_jobs.each do |job|
+  p = link_to job.name, job
+
+
+hr
 p = link_to 'コンテナを新規作成する', ''
 p = link_to 'ブランチをpullする', ''
 p = link_to 'ワーカーを作成する', ''

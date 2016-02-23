@@ -20,6 +20,12 @@ class ContainersController < ApplicationController
     @container = Container.find(params[:id])
   end
 
+  def execute
+    @container = Container.find(params[:id])
+    @container.executable_jobs.find_by(name: params[:job_name]).execute!
+    redirect_to @container
+  end
+
   private
 
   def dc_params

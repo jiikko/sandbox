@@ -9,7 +9,7 @@ ls
     script: <<-CMD
 git checkout %{branch_name}
     CMD
- belongs_to },
+  },
   { name: :start_worker,
     script: <<-CMD
 test-queue
