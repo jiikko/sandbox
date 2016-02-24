@@ -2,3 +2,7 @@
 div
   = @queued_job.name
   | を実行
+h4 結果
+
+= @queued_job.status
+= simple_format @queued_job.log
