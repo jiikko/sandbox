@@ -8,9 +8,9 @@ results = []
 
 c.times do |i|
   t = Thread.new do
-    once = n / c
-    n_start = once * i
-    n_end = once * (i + 1)
+    chank = n / c
+    n_start = chank * i
+    n_end = chank * (i + 1)
     sum = 0
     (n_start...n_end).each do |x|
       sum += func(x)
