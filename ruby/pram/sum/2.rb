@@ -8,17 +8,16 @@ results = []
 
 c.times do |i|
   t = Thread.new do
-    tno = i + 1
     once = n / c
-    n_end = once * tno
-    n_start = once * (tno - 1 )
+    n_start = once * i
+    n_end = once * (i + 1)
     sum = 0
     (n_start...n_end).each do |x|
       sum += func(x)
     end
-    results[tno] = sum
+    results[i] = sum
   end
   t.join
 end
 
-puts results.compact.inject(:+)
+puts results.inject(:+)
