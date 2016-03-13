@@ -1,10 +1,11 @@
 require './http_helper'
 
-concurency = 4
+concurency = 6
 
 queue = Queue.new
 ts = []
 results = []
+mutex = Mutex.new
 
 concurency.times do
   ts << Thread.start do
@@ -12,7 +13,7 @@ concurency.times do
       task = queue.pop
       if task
         response = task.call
-        results << response.code
+        mutex.synchronize { results << response.code }
       else
         break
       end

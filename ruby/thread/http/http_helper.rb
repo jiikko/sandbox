@@ -1,16 +1,19 @@
-require 'open-uri'
+require 'uri'
+require 'net/http'
+require 'openssl'
 
 URL = 'http://google.com'
 COUNT = 20
 
-class DammyHttpResponse
-  def code
-    200
-  end
-end
-
 def get_request
-  # open(URL) do |f|
-  # end
-  DammyHttpResponse.new
+  uri = URI.parse(URL)
+  Net::HTTP.start(uri.host, uri.port,
+                  open_timeout: 5,
+                  read_timeout: 5,
+                  use_ssl: uri.scheme == 'https',
+                  ssl_version: :TLSv1,
+                  verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
+    response = http.get(uri.request_uri)
+    return response
+  end
 end
