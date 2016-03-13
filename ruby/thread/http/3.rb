@@ -1,8 +1,10 @@
 require './http_helper'
+require './thread_manegaer'
 
 concurency = 4
 
-queue = Queue.new
+thread_manegaer = Threadmanegaer.new(concurency)
+queue = thread_manegaer.queue
 ts = []
 results = []
 
@@ -21,8 +23,7 @@ concurency.times do
 end
 
 COUNT.times do
-  queue.push(->{ get_request })
+  thread_manegaer.forward_task(->{ get_request })
 end
-concurency.times { queue.push(nil) }
-ts.each(&:join)
+thread_manegaer.finish
 puts results.inspect
