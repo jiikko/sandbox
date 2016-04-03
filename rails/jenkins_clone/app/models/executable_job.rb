@@ -4,6 +4,7 @@ class ExecutableJob < ActiveRecord::Base
 
   def execute!
     queued_job = container.queued_jobs.create!(
+      status: QueuedJob.statuses[:status_queued],
       name: name,
       script: script,
     )

@@ -1,12 +1,19 @@
 require "open3"
 
 class QueuedJob < ActiveRecord::Base
+  enum status: [:status_queued, :status_executing, :status_finished]
+
   belongs_to :container
   belongs_to :template_job
 
   def execute!
-    stdin, stdout, stderr, wait_thr = Open3.popen3(script % container_hash)
-    self.update_columns(log: stdout.try!(:read) + stderr.try!(:read), status: $?.try(:exitstatus))
+    status_executing!
+    # TODO 改行毎にcapture3してtailしているように見せたい
+    stdout, stderre, process_status = Open3.capture3(script % container_hash)
+    self.update_columns(log: stdout + stderre, exitstatus: process_status.exitstatus)
+  ensure
+    self.update_columns(exitstatus: exitstatus.presence || process_status.try!(:exitstatus),
+                        status: QueuedJob.statuses[:status_finished])
   end
 
   private

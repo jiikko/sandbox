@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20160223225004) do
     t.string   "name"
     t.text     "script"
     t.text     "log"
+    t.integer  "exitstatus"
     t.integer  "status"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false

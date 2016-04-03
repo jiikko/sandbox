@@ -5,6 +5,7 @@ class CreateQueuedJobs < ActiveRecord::Migration
       t.string :name
       t.text :script
       t.text :log
+      t.integer :exitstatus
       t.integer :status
 
       t.timestamps null: false
