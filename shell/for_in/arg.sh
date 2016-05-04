@@ -18,3 +18,8 @@ echo '----------'
 for i in `ls`; do
   echo $i
 done
+
+list="echo README.md docs hoge.sh mysql rails ruby shell vimscript"
+for i in $list; do
+  echo $i
+done
