@@ -45,3 +45,14 @@ NNabcNabc
 find.md
 ```
 
+
+## xargs を使ったコマンドの実行
+```
+grep $WARD /dev/null $(find ............)
+```
+* 引数が殻だった場合に標準出力を待ち続けるのでnullだった場合を想定して引数に/dev/nullを指定する
+* zsh: argument list too long: grep ってなったらxargsでわける
+  * `getconf ARG_MAX`
+```
+find /usr/include -type -f | xargs grep POSTIX_OPEN_MAX /dev/null
+```
