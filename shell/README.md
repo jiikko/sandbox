@@ -14,3 +14,5 @@
   * -d でディレクトリ作成する
 * od -ab
   * print 不可視文字
+## zram
+https://wiki.debian.org/ZRam
