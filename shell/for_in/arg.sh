@@ -11,6 +11,12 @@ for i in "README.md docs hoge.sh mysql rails ruby shell vimscript"; do echo $i; 
 # loopされない
 for i in "echo README.md docs hoge.sh mysql rails ruby shell vimscript"; do echo $i; done
 
+# loopされない
+for i in 'echo README.md docs hoge.sh mysql rails ruby shell vimscript'; do echo $i; done
+
+# loopさる
+for i in README.md docs hoge.sh mysql rails ruby shell vimscript; do echo $i; done
+
 # loopされる
 list="echo README.md docs hoge.sh mysql rails ruby shell vimscript"
 for i in $list; do echo $i; done
