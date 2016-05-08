@@ -38,3 +38,6 @@
 #### レベル6: 情報的強度
 
 #### レベル7: 機能的強度
+
+
+http://www.kogures.com/hitoshi/webtext/index.html
