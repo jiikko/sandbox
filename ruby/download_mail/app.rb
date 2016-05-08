@@ -1,10 +1,16 @@
 require 'yaml'
-CONDFIG_FILE = 'config.yml'
-config_file = File.join(File.expand_path('../../', __FILE__), CONDFIG_FILE)
-config = nil
-if File.exists?(config_file)
-  config = YAML.load_file(config_file)
-else
-  puts 'not found condfig_path'
-  exit 1
+require 'gmail'
+require 'pry'
+require 'kconv'
+
+config = YAML.load_file('./config.yml')
+binding.pry
+mails = []
+Gmail.new(config["gmail"]["name"], config["gmail"]["password"]) do |gmail|
+  gmail.mailbox('rails-error').emails.each do |mail|
+    mail.subject
+    mail.message_id
+    maill.body.raw_source
+    maill.body.decoded.toutf8
+  end
 end

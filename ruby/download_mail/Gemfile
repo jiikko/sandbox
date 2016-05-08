@@ -1,0 +1,6 @@
+# A sample Gemfile
+source "https://rubygems.org"
+
+gem 'exception_notification-parser', github: 'jiikko/exception_notification-parser'
+gem 'gmail'
+gem 'pry'
