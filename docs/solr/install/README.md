@@ -50,7 +50,7 @@ sudo bash ./install_solr_service.sh solr-6.0.0.tgz
 scp files/rails_app_for_sunspot/solr koji@192.168.56.102:/tmp/_solr
 ```
 * `rails sunspot:solr:start` で生成されるファイル流用してコアを作成し, リポジトリのconfig/production/solr配下にコピーする
-* sudo cp -r /var/www/hastumago/current/config/server/production/solr /var/solr && sudo chown solr:solr /var/solr/solr
+* `sudo cp -r /var/www/hatsumago/current/config/server/production/solr /var/solr && sudo chown solr:solr /var/solr/solr`
 * Solrホームディレクトリを変更する
   * `sudo sed -i -e 's||SOLR_HOME.*$|SOLR_HOME=/var/solr/solr|' /etc/default/solr.in.sh`
 * sudo service solr restart
