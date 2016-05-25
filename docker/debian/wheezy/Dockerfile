@@ -10,7 +10,7 @@
 #############################################################################
 
 FROM debian:wheezy
-MAINTAINER TAHARA Yoshinori <tahara@actindi.net>
+MAINTAINER koji <n905.1214@gmail.com>
 
 WORKDIR /tmp
 
