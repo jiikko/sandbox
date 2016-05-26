@@ -41,7 +41,7 @@ RUN echo 'koji ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
 
 
 # cleanup
-RUN apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+# RUN apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 
 # ssh
