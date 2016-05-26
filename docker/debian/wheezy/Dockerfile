@@ -18,7 +18,7 @@ WORKDIR /tmp
 ENV DEBIAN_FRONTEND noninteractive
 # ADD sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y apt-utils && apt-get dist-upgrade -y \
- && apt-get install -y openssh-server sudo build-essential zsh vim wget
+ && apt-get install -y openssh-server sudo build-essential zsh vim wget rsyslog
 
 # Time zone
 RUN echo "Asia/Tokyo" > /etc/timezone && dpkg-reconfigure tzdata
