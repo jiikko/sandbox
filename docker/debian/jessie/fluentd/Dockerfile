@@ -16,9 +16,10 @@ WORKDIR /tmp
 
 # apt-get
 ENV DEBIAN_FRONTEND noninteractive
-RUN echo 'deb http://packages.treasure-data.com/debian/ lucid contrib' | tee -a /etc/apt/sources.list
-RUN apt-get update && apt-get install -y apt-utils && apt-get dist-upgrade -y \
- && apt-get install -y openssh-server sudo build-essential zsh vim wget td-agent
+RUN apt-get update && apt-get dist-upgrade -y
+RUN apt-get install openssh-server sudo build-essential zsh vim wget ntp -y
+
+RUN curl -L https://toolbelt.treasuredata.com/sh/install-debian-jessie-td-agent2.sh | sh
 
 # Time zone
 RUN echo "Asia/Tokyo" > /etc/timezone && dpkg-reconfigure tzdata
