@@ -134,3 +134,7 @@ zsh: command not found: ll
 ## その他
 ### zram
 https://wiki.debian.org/ZRam
+
+## ユーザー管理
+### グループに追加する
+sudo usermod -G docker koji
