@@ -1,10 +1,10 @@
 #############################################################################
 #
 # build
-# docker build -t localhost:5000/debian-wheezy-redis .
+# docker build -t localhost:5000/debian-jessie-samba .
 #
 # run
-# ID=$(docker run --privileged -d -t --name 'redis1' localhost:5000/debian-wheezy-redis)
+# ID=$(docker run --privileged -d -t --name 'redis1' localhost:5000/debian-jessie-samba)
 # IP=$(docker inspect --format="{{ .NetworkSettings.IPAddress }}" $ID)
 # echo $ID $IP
 #############################################################################
