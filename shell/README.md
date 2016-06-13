@@ -137,4 +137,4 @@ https://wiki.debian.org/ZRam
 
 ## ユーザー管理
 ### グループに追加する
-sudo usermod -G docker koji
+sudo usermod -aG docker koji
