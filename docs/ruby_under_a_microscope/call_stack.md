@@ -10,3 +10,11 @@
   * YARVはRubyプルグラムのコールスタックも把握し続ける
   * コールスタックには，どのメソッドが他のメソッド、関数、ブロックやラムダなどを呼び出したかが記録される
   * 実際のところ、YARVはその命令列自体のためだけではなくRubyプログラム全体のために引数や返り値を把握しておく必要がある
+
+
+```ruby
+code = <<-CODE
+'def hoge;s = "dd"; end; def gggg; hgh = "ff";gg = "ff"; 10.times { puts gg }; end'
+CODE
+puts RubyVM::InstructionSequence.compile(code).disasm
+```

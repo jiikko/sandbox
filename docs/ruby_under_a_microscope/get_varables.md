@@ -62,6 +62,7 @@ getlocal        2, 0
 opt_send_simple
 ```
 ```
+(図3 yarvスタック)
  ___________
 |           |
 |           |
@@ -72,4 +73,7 @@ opt_send_simple
 | str       |
  -----------
  ```
- 
+
+* str に文字列を代入するとsetlocal命令が走る。第一引数は、EP, 第二はスコープ外の変数へアクセスする(レキシカルスコープ)ときに使用する。現在のスコープないであれば0。
+  * setlocalによってstr変数に"hello"がコピーされる。スタックからpopされ、put self でスタックにselfがのって、getlocalで引数の"hello"がスタックにのる。(図3)
+*
