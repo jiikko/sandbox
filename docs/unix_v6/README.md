@@ -24,3 +24,28 @@ linuxカーネルは現在100万行と言われています。
 * Cが学べる(古いのであまりおすすめはできないけど...)
 
 source https://github.com/myoan/unix-study
+
+### その他
+#### シーケンス図の作り方
+
+* https://stackedit.io/editor
+* http://qiita.com/ka215/items/a709665cb34c505ccf1f
+* https://www.websequencediagrams.com/
+
+```sequence
+Frontend->Backend:get or post
+Backend->Redis:get
+Redis->Redis:get model
+Redis-->MySQL:get model (When data is not found on Redis)
+Redis-->Backend:mohdel
+Backend-->Frontend:json
+Frontend->Frontend:build DOM
+```
+
+```
+// https://www.websequencediagrams.com/
+親プロセス->*子プロセス: fork
+子プロセス->子プロセス: exec
+子プロセス->親プロセス: exit
+destroy 子プロセス
+```
