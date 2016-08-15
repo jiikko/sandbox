@@ -1,6 +1,6 @@
 # プロセスの生成
 ## プロセスのライフサイクル
-![lifesycle](images/process_lifesycle.png)
+![lifesycle](../images/process_lifesycle.png)
 
 * forkすると同じ情報(後述)を持つプロセスのコピーを作る
   * forkを実行したプロセスを親プロセスと呼び、forkによって作られたプロセスを子プロセスと呼ぶ
@@ -32,8 +32,6 @@ while(wait() != i);
     * 親のテキストセグメントを参照している
 * 別プロセスなのでお互いの動作が影響しあうことはない
 * execするとテキストセグメントの共有はしなくなる
-
-![mem](images/mem.png)
 
 ## forkシステムコール
 下記順番で処理される
@@ -102,7 +100,7 @@ out:
 * これから親となるプロセスのproc[]エントリとデータセグメントを子プロセスにコピーする
   * テキストセグメントはコピーせず、共有する
 
-![mem](images/mallc.png)
+![mem](../images/mallc.png)
 
 ```https://www.websequencediagrams.com
 親-->*malloc()に失敗:
