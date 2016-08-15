@@ -42,6 +42,8 @@ while(wait() != i);
 * (カーネル)forkシステムコール
   * ここで子プロセスの分も実行される
 
+![lifesycle](../images/fork_stack.png)
+
 ```c
 fork() {
   // p1 が親、p2が子
