@@ -47,7 +47,7 @@ while(wait() != i);
 ```c
 fork() {
   // p1 が親、p2が子
-  refister struct proc *p1, p2;
+  register struct proc *p1, p2;
   p1 = u.u_procp;
   for(p2 = &proc[0]; p2 < &proc[NPROC]; p2++) {
     if(p2->p_stat == NULL) {
