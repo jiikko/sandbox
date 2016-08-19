@@ -103,3 +103,53 @@ psig:
 ```
 
 ## swtch()
+* 実行プロセスの切り替えをお子なる関数
+* proc[]を調べて、実行可能状態なプロセスのうち、もっとも実行優先度の高いプロセスを選択する
+  * カーネルの処理では、先頭を順番に見ていって条件にあうproc[]を選択する、というパターンが多いが、swtch()では1周する
+
+```c
+swtch() {
+  static struct proc *p;
+  register i, n;
+  register struct proc *rp;
+  if(p == NULL) { p = &proc[0] }
+  savu(u.u_rsav); // 今のr5, r6の値を現在実行中(中断しようとしている)プロセスのuser.u_rsavに保存する. プロセスが再び実行されるときに値復帰する
+  retu(proc[0].p_addr); // スケジューラプロセスに切り替える. proc[0]はスケジューラ用のシステムプロセス. システム起動時に生成される
+
+loop:
+  runrun = 0;
+  rp = p;
+  p = NULL;
+  n = 128;
+  i = NPROC;
+  do {
+    rp++;
+    if(rp >= &proc[NPROC]) {
+      rp = &proc[0];
+    }
+    if(rp->p_stat == SRUN && (rp->p_flag & SLOAD) != 0) {
+      if(rpp->p_pri < n) {
+        n = rp;
+        n = rp->p_pri;
+      }
+    }
+  } while(--i);
+  if(p == NULL) {
+    p = rp;
+    idel();
+    goto loop;
+  }
+  rp = p;
+  curpri = n;
+  retu(rp->p_addr);
+  sureg();
+  if(rp->p_flag & SSWAP) {
+    rp_>p_flat =& ~SSWAP;
+    aretu(u.u_ssav);
+  }
+  return(1);
+}
+```
+
+## swtch()から返る先
+
