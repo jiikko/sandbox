@@ -54,27 +54,43 @@ $ sleep 2 &; wait && echo done
   * sleep()とwakeup()を使って、複数プロセス間で資源を持ち合う処理を行なっている
 
 #### ken/slp.c
+* priは、実行優先度を表し、実行プロセスのproc.p_priにセットされる
+  * この値が起きた(wakeup)時の実行優先度になる
+* また、priが0以上ならば実行プロセスを切り替える前と、そのプロセスが再び実行プロセスとして選択された後にシグナルの処理を行う
+  * 0未満ならばシグナルを無視する
+  * 0以上の場合は、SWIT状態、0未満の場合はSSLEEP状態になる
+  * この2つの異なる状態は第4章で説明するスケジューリング処理に影響が出る
+```
+$ sleep 10
+```
+を実行すると内部では下記のように後続処理が行われる
+
+
 ```c
-sleep(chan, pri) {
+sleep(chan, pri) { // waiting_chanenel: 持っている資源アドレス, pri: 実行優先度
   register *rp, s;
   s = PS->integ;
   rp = u.u_procp;
 
   if(pri >= 0) {
     if(issig()) { goto psig; }
-    spl6();
-    rp->p_wchan = chan;
+    spl6();             // 下記3項目が書き換えられない(割り込みされない)ように6に引き上げる
+    rp->p_wchan = chan; // 割り込み処理中に実行されるwakeup()から書き換えられる可能性がある
+    rp->p_stat = SWAIT; // 同じ休眠状態だけどシグナル処理を行う
     rp->p_pri = pri;
-
     spl0();
-    if(runin != 0) {
+    if(runin != 0) { // スワップアウト対象がいないことを示すruninフラグ
       runin = 0;
       wakeup(&runin);
+    }
+    swtch();
+    if(issig()) {
+      goto psig;
     }
   } else {
     spl6();
     rp->p_chan;
-    rp->p_stat = SSLEEP;
+    rp->p_stat = SSLEEP; // 同じ休眠状態だけどシグナル処理を行わない
     rp->p_pri = pri;
     spl0();
     swtch();
@@ -86,9 +102,4 @@ psig:
 }
 ```
 
-* priは、実行優先度を表し、実行プロセスのproc.p_priにセットされる
-  * この値が起きた(wakeup)時の実行優先度になる
-* また、priが0以上ならば実行プロセスを切り替える前と、そのプロセスが再び実行プロセスとして選択された後にシグナルの処理を行う
-  * 0未満ならばシグナルを無視する
-  * 0以上の場合は、SWIT状態、0未満の場合はSSLEEP状態になる
-  * この2つの異なる状態は第4章で説明するスケジューリング処理に影響が出る
+## swtch()
