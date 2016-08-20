@@ -112,6 +112,8 @@ psig:
   * 選択されたプロセスのuser構造帯に保存されているユーザAPRの値を復帰
 * 「fork()で新たに生成されたプロセスはnewproc()から1を返す」というのもこれにより実現している
 
+![switch](../images/retu_savu.png)
+
 ```c
 swtch() {
   static struct proc *p;
@@ -150,12 +152,14 @@ loop:
     goto loop;
   }
   rp = p;
-  curpri = n; // current priority. グローバル変数. 実行中プロセスの実行優先度を保持している
-  retu(rp->p_addr);
-  sureg();
-  if(rp->p_flag & SSWAP) {
-    rp_>p_flat = &~SSWAP;
-    aretu(u.u_ssav);
+  curpri = n;       // current priority. グローバル変数. 実行中プロセスの実行優先度を保持している
+  retu(rp->p_addr); // 選択されたプロセスのr5, r6を復帰し, またuでuser構造体を参照できるようにカーネルAPRの値を変更する
+  sureg();          // 選択されたプロセスのuser構造体に保存されているAPRをハードウェアのユーザAPRに復元し、ユーザ空間を切り替える. これでスイッチ完了
+
+  if(rp->p_flag & SSWAP) { // SSWAPがたっていたら
+    rp_>p_flag = &~SSWAP;  // SSWAPフラグをクリアして
+    aretu(u.u_ssav);       // user.u_ssavからr5, r6を復帰する
+                           // SSWAPフラグは、スケジューラ以外によってスワップアウト処理が行われると立てられる
   }
   return(1);
 }
