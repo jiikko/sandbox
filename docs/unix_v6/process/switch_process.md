@@ -117,7 +117,8 @@ swtch() {
   retu(proc[0].p_addr); // スケジューラプロセスに切り替える. proc[0]はスケジューラ用のシステムプロセス. システム起動時に生成される
 
 loop:
-  runrun = 0;
+  // runrun変数は、実行プロセスよりも実行優先度の高いプロセスが存在することを示すフラグ
+  runrun = 0; // これから最も実行優先度の高いプロセスへ切り替えようとしているのでリセットする
   rp = p;
   p = NULL;
   n = 128;
@@ -144,7 +145,7 @@ loop:
   retu(rp->p_addr);
   sureg();
   if(rp->p_flag & SSWAP) {
-    rp_>p_flat =& ~SSWAP;
+    rp_>p_flat = &~SSWAP;
     aretu(u.u_ssav);
   }
   return(1);
