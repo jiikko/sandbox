@@ -131,6 +131,13 @@ $ \ll
 zsh: command not found: ll
 ```
 
+## functionでラップされているコマンドのパスを調べる
+* rvm を使っているとgem はrvmのfunctionでラップされていてwhichではgem実行ファイルの大本パスはわからない
+  * 内部ではcommand コマンドを使って大本gemコマンドを呼び出している
+* gem functionを削除してwhichすればいい
+  * unset -f gem
+  * which gem
+
 ## その他
 ### zram
 https://wiki.debian.org/ZRam
