@@ -138,6 +138,37 @@ zsh: command not found: ll
   * unset -f gem
   * which gem
 
+## テキストファイルを16進数でダンプする
+```
+$ echo -n 'a' > t; od -ab t
+0000000    a
+          141
+$ echo 'a' > t; od -ab t
+0000000    a  nl
+          141 012
+```
+null文字が見えている
+```
+$ nkf --overwrite --oc=UTF-8-BOM t; od -ab t
+0000000    �   �   �   a  nl
+          357 273 277 141 012
+$ nkf --overwrite --oc=UTF-8 t; od -ab t
+0000000    a  nl
+          141 012
+```
+
+## テキストファイルのサイズを調べる
+```
+$ echo -n a > t; ls -l t
+-rw-r--r--  1 koji  staff  1  9 22 17:43 t
+```
+1バイト、と表示されている
+```
+du -h t
+4.0K    t
+```
+FSのブロックサイズが4KBなので1文字のみだけど1ブロック分使っているため4KB、と表示されている
+
 ## その他
 ### zram
 https://wiki.debian.org/ZRam
