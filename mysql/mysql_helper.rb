@@ -10,7 +10,7 @@ puts `echo 'drop database #{@db_name}' | mysql -uroot`
 puts `echo 'create database #{@db_name}' | mysql -uroot`
 
 config = {
-  user: :root,
+  username: :root,
   password: "",
   :adapter   => "mysql2",
   :encoding  => "utf8",
@@ -20,3 +20,4 @@ config = {
 }
 
 ActiveRecord::Base.establish_connection(config)
+ActiveRecord::Base.logger = Logger.new(STDOUT)
