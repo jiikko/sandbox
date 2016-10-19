@@ -106,6 +106,23 @@ puts 'updating'
 member.update(name: 22)
 puts 'updated'
 
+
+# 別接続で
+Thread.new do
+  ActiveRecord::Base.connection_pool.with_connection do
+    member = Member.find(1)
+    member.lock!
+    sleep 3
+    puts 'finish bg'
+  end
+end
+sleep 1
+member = Member.find(1)
+puts 'doing lock!'
+puts 'updating'
+member.update(name: 22)
+puts 'updated'
+
 }
 
 # トランザクション中でのfor uodate とnot トランザクション中でのfor uodateの違い
