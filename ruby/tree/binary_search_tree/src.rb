@@ -1,7 +1,10 @@
 class Tree
   class Node
-    def initialize(i)
+    attr_reader :parent
+
+    def initialize(i, parent: nil)
       @myself = i
+      @parent = parent
       @children = []
     end
 
@@ -11,14 +14,14 @@ class Tree
         if low_node
           low_node.add(i)
         else
-          @children[0] = Node.new(i)
+          @children[0] = Node.new(i, parent: self)
         end
       else
         high_node = @children[1]
         if high_node
           high_node.add(i)
         else
-          @children[1] = Node.new(i)
+          @children[1] = Node.new(i, parent: self)
         end
       end
       true
@@ -39,8 +42,13 @@ class Tree
     end
 
     def r_print(depth)
-      print "#{depth.to_s}:#{self.to_s}"
-      next_depth = depth + 1
+      next_depth = nil
+      puts "#{depth.to_s}:#{self.to_s}"
+      if self.parent.nil?
+        next_depth = 1
+      else
+        next_depth = depth + 1
+      end
       @children.each do |node|
         if node
           node.r_print(next_depth)
@@ -48,6 +56,32 @@ class Tree
           next
         end
       end
+    end
+
+    def max_depth(current_depth)
+      if leaf?
+        return current_depth
+      end
+
+      if self.parent.nil?
+        next_depth = 1
+      else
+        next_depth = current_depth + 1
+      end
+
+      max_depth = 0
+      @children.each do |node|
+        next if node.nil?
+        temp_max = node.max_depth(next_depth)
+        if temp_max > max_depth
+          max_depth = temp_max
+        end
+      end
+      max_depth
+    end
+
+    def leaf?
+      @children.empty?
     end
   end
 
@@ -72,5 +106,9 @@ class Tree
 
   def nodes_with_to_s
     node.nodes_with_to_s
+  end
+
+  def max_depth
+    node.max_depth(0)
   end
 end

@@ -30,11 +30,11 @@ tree.add(1)
 tree.add(2)
 ```
 
-* 順番に標準出力へ表示する
-  * https://github.com/jiikko/sandbox/blob/3c773d533f36cc266489d11ec1c73a2ea77b592f/ruby/tree/normal_tree/src.rb
 * 深さを出力する
   * https://github.com/jiikko/sandbox/commit/a1056d1a516762fd54564cd50cca71e547164fd4
     * root にあるもう片方の親のカウントができていない
+* ノードを小さい順番から標準出力へ表示する
+  * https://github.com/jiikko/sandbox/blob/3c773d533f36cc266489d11ec1c73a2ea77b592f/ruby/tree/normal_tree/src.rb
 * ノードを探索できるようにする
 * ノードを削除できるようにする
 * 木のカタチをビジュアライズする
