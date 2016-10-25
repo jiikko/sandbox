@@ -37,6 +37,17 @@ class Tree
     def to_s
       @myself
     end
+
+    def r_print
+      puts self.to_s
+      @children.each do |node|
+        if node
+          node.r_print
+        else
+          next
+        end
+      end
+    end
   end
 
   attr_reader :node
@@ -44,21 +55,8 @@ class Tree
   def initialize(i)
     @node = Node.new(i)
   end
+
+  def print
+    @node.r_print
+  end
 end
-
-tree = Tree.new(10)
-tree.node.add(3)
-tree.node.add(7)
-tree.node.add(11)
-tree.node.add(1)
-tree.node.add(20)
-tree.node.add(21)
-tree.node.add(22)
-tree.node.add(13)
-
-puts tree.node.children # =>
-puts tree.node.nodes_with_to_s[0] # => 3
-puts tree.node.nodes_with_to_s[1] # => 7
-puts tree.node.nodes[0].nodes_with_to_s[0] # => 1
-puts tree.mix # => 1
-puts tree.max # => 20
