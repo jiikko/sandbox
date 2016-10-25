@@ -35,14 +35,15 @@ class Tree
     end
 
     def to_s
-      @myself
+      @myself.to_s
     end
 
-    def r_print
-      puts self.to_s
+    def r_print(depth)
+      puts "#{depth.to_s}:#{self.to_s}"
+      next_depth = depth + 1
       @children.each do |node|
         if node
-          node.r_print
+          node.r_print(next_depth)
         else
           next
         end
@@ -57,6 +58,6 @@ class Tree
   end
 
   def print
-    @node.r_print
+    @node.r_print(0)
   end
 end
