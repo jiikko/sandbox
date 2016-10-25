@@ -56,4 +56,18 @@ describe Tree do
       expect(tree.max_depth).to eq 3
     end
   end
+
+  describe '#find' do
+    it 'be return node' do
+      tree = Tree.new(10)
+      expect(tree.find(1)).to be_nil
+      tree.add(3)
+      tree.add(12)
+      tree.add(14)
+      tree.add(13)
+      tree.add(20)
+      expect(tree.find(3)).to eq true
+      expect(tree.find(20)).to eq true
+    end
+  end
 end

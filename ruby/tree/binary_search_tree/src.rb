@@ -83,6 +83,19 @@ class Tree
     def leaf?
       @children.empty?
     end
+
+    def find(i)
+     if @myself == i
+       return true
+     end
+     return if leaf?
+
+     if @myself > i
+       @children[0].find(i)
+     else
+       @children[1].find(i)
+     end
+    end
   end
 
   attr_reader :node
@@ -110,5 +123,9 @@ class Tree
 
   def max_depth
     node.max_depth(0)
+  end
+
+  def find(i)
+    node.find(i)
   end
 end
