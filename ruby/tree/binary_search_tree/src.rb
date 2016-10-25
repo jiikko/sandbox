@@ -7,14 +7,14 @@ class Tree
 
     def add(i)
       if @myself > i
-        low_node = @children.first
+        low_node = @children[0]
         if low_node
           low_node.add(i)
         else
           @children[0] = Node.new(i)
         end
       else
-        high_node = @children.last
+        high_node = @children[1]
         if high_node
           high_node.add(i)
         else
@@ -39,7 +39,7 @@ class Tree
     end
 
     def r_print(depth)
-      puts "#{depth.to_s}:#{self.to_s}"
+      print "#{depth.to_s}:#{self.to_s}"
       next_depth = depth + 1
       @children.each do |node|
         if node
@@ -59,5 +59,18 @@ class Tree
 
   def print
     @node.r_print(0)
+  end
+
+  def add(i)
+    node.add(i)
+    true
+  end
+
+  def nodes
+    node.nodes
+  end
+
+  def nodes_with_to_s
+    node.nodes_with_to_s
   end
 end

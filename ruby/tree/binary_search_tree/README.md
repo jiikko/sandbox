@@ -1,5 +1,6 @@
 # 二分探索木を作る
-https://ja.wikipedia.org/wiki/%E4%BA%8C%E5%88%86%E6%8E%A2%E7%B4%A2%E6%9C%A8
+* https://ja.wikipedia.org/wiki/木構造\_(データ構造)
+* https://ja.wikipedia.org/wiki/%E4%BA%8C%E5%88%86%E6%8E%A2%E7%B4%A2%E6%9C%A8
 
 ## IF例
 ```ruby
@@ -10,8 +11,6 @@ tree.add(11)
 tree.add(1)
 tree.add(20)
 tree.add(21)
-tree.add(22)
-tree.add(13)
 ```
 
 * ノードを追加できるようにする
@@ -20,6 +19,12 @@ tree.add(13)
   * https://github.com/jiikko/sandbox/blob/3c773d533f36cc266489d11ec1c73a2ea77b592f/ruby/tree/normal_tree/src.rb
 * 深さを出力する
   * https://github.com/jiikko/sandbox/commit/a1056d1a516762fd54564cd50cca71e547164fd4
+    * root にあるもう片方の親のカウントができていない
 * 木のカタチをビジュアライズして表示する
 * ノードを探索できるようにする
 * ノードを削除できるようにする
+
+## to run spec
+```
+bundle exec rspec
+```
