@@ -39,34 +39,26 @@ class Tree
     end
   end
 
+  attr_reader :node
+
   def initialize(i)
-    @root = Node.new(i)
-  end
-
-  def add(i)
-    @root.add(i)
-    true
-  end
-
-  def nodes
-    @root.nodes
-  end
-
-  def nodes_with_to_s
-    @root.nodes_with_to_s
+    @node = Node.new(i)
   end
 end
 
 tree = Tree.new(10)
-tree.add(3)
-tree.add(7)
-tree.add(11)
-tree.add(1)
-tree.add(20)
-tree.add(21)
-tree.add(22)
-tree.add(13)
+tree.node.add(3)
+tree.node.add(7)
+tree.node.add(11)
+tree.node.add(1)
+tree.node.add(20)
+tree.node.add(21)
+tree.node.add(22)
+tree.node.add(13)
 
-puts tree.children # =>
+puts tree.node.children # =>
+puts tree.node.nodes_with_to_s[0] # => 3
+puts tree.node.nodes_with_to_s[1] # => 7
+puts tree.node.nodes[0].nodes_with_to_s[0] # => 1
 puts tree.mix # => 1
 puts tree.max # => 20
