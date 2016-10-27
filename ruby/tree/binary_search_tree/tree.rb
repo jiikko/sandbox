@@ -2,7 +2,7 @@ class Tree
   attr_reader :node
 
   def initialize(i)
-    @node = Node.new(i)
+    @node = Tree::Node.new(i)
   end
 
   def print
