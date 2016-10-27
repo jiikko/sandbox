@@ -91,7 +91,6 @@ class Tree::Node
     if @myself == i
       return self
     end
-    return if leaf?
 
     if @myself > i
       @children[0].find(i)
@@ -102,7 +101,8 @@ class Tree::Node
 
   def remove(i)
     found_node = find(i)
-    local_lowest_node = found_node.nodes[1] && found_node.nodes[1].lowest_node
+    right_lowest_node = found_node.nodes[1] && found_node.nodes[1].lowest_node
+    local_lowest_node = found_node.nodes[0] unless right_lowest_node
     if local_lowest_node
       n = found_node.parent.nodes[0]
       if found_node == n
@@ -124,16 +124,12 @@ class Tree::Node
     end
   end
 
-  private
+  protected
 
   def lowest_node
-    tmp_loweset = nil
-    nodes.each do |node|
-      tmp_loweset ||= node
-      if tmp_loweset.to_i > node.to_i
-        tmp_loweset = node
-      end
+    if leaf? || nodes[0].nil?
+      return self
     end
-    tmp_loweset
+    nodes[0].lowest_node
   end
 end

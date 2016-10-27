@@ -5,9 +5,9 @@ describe Tree do
   describe '#add' do
     it 'add node' do
       #             10
-      #        03        12
-      #     01    04   13  14
-      #       02             20
+      #        03       12
+      #     01    04      14
+      #       02        13  20
 
       tree = Tree.new(10)
       tree.add(3)
@@ -75,6 +75,13 @@ describe Tree do
     context 'when remove root node' do
     end
     context '削除するnodeに子がいる場合' do
+      it 'remove node' do
+        tree = Tree.new(10)
+        tree.add(4)
+        tree.add(3)
+        tree.remove(4)
+        expect(tree.nodes[0].to_s).to eq '3'
+      end
     end
     context '削除するnodeに子がいない場合' do
       it 'remove node' do
@@ -88,6 +95,25 @@ describe Tree do
         expect(tree.find(3)).not_to be_nil
         tree.remove(3)
         expect(tree.find(3)).to be_nil
+      end
+    end
+  end
+
+  describe 'private methods' do
+    describe '#lowest_node' do
+      it 'return node' do
+        tree = Tree.new(10)
+        tree.add(3)
+        tree.add(12)
+        tree.add(14)
+        tree.add(13)
+        tree.add(20)
+        tree.add(4)
+        tree.add(1)
+        tree.add(2)
+        expect(tree.find(14).send(:lowest_node).to_i).to eq 13
+        expect(tree.find(10).send(:lowest_node).to_i).to eq 1
+        expect(tree.find(3).send(:lowest_node).to_i).to eq  1
       end
     end
   end
