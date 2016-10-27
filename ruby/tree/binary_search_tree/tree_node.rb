@@ -91,6 +91,8 @@ class Tree::Node
     if @myself == i
       return self
     end
+    # fail when it not exist children.
+    return if leaf?
 
     if @myself > i
       @children[0].find(i)
