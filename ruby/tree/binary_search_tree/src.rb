@@ -41,6 +41,10 @@ class Tree
       @myself.to_s
     end
 
+    def to_i
+      @myself
+    end
+
     def r_print(depth)
       next_depth = nil
       puts "#{depth.to_s}:#{self.to_s}"
@@ -81,12 +85,12 @@ class Tree
     end
 
     def leaf?
-      @children.empty?
+      @children.compact.empty?
     end
 
     def find(i)
      if @myself == i
-       return true
+       return self
      end
      return if leaf?
 
@@ -95,6 +99,43 @@ class Tree
      else
        @children[1].find(i)
      end
+    end
+
+    def remove(i)
+      found_node = find(i)
+      local_lowest_node = found_node.nodes[1] && found_node.nodes[1].lowest_node
+      if local_lowest_node
+        n = found_node.parent.nodes[0]
+        if found_node == n
+          found_node.parent.nodes[0] = local_lowest_node
+        end
+        n = found_node.parent.nodes[1]
+        if found_node == n
+          found_node.parent.nodes[1] = local_lowest_node
+        end
+      else
+        n = found_node.parent.nodes[0]
+        if found_node == n
+          found_node.parent.nodes[0] = nil
+        end
+        n = found_node.parent.nodes[1]
+        if found_node == n
+          found_node.parent.nodes[1] = nil
+        end
+      end
+    end
+
+    private
+
+    def lowest_node
+      tmp_loweset = nil
+      nodes.each do |node|
+        tmp_loweset ||= node
+        if tmp_loweset.to_i > node.to_i
+          tmp_loweset = node
+        end
+      end
+      tmp_loweset
     end
   end
 
@@ -127,5 +168,9 @@ class Tree
 
   def find(i)
     node.find(i)
+  end
+
+  def remove(i)
+    node.remove(i)
   end
 end

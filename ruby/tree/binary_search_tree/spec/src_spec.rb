@@ -3,7 +3,7 @@ require 'pry'
 
 describe Tree do
   describe '#add' do
-    it 'be add node' do
+    it 'add node' do
       #             10
       #        03        12
       #     01    04   13  14
@@ -30,7 +30,7 @@ describe Tree do
   end
 
   describe '#max_depth' do
-    it 'be print max depth' do
+    it 'print max depth' do
       tree = Tree.new(10)
       expect(tree.max_depth).to eq 0
 
@@ -58,7 +58,7 @@ describe Tree do
   end
 
   describe '#find' do
-    it 'be return node' do
+    it 'return node' do
       tree = Tree.new(10)
       expect(tree.find(1)).to be_nil
       tree.add(3)
@@ -66,8 +66,29 @@ describe Tree do
       tree.add(14)
       tree.add(13)
       tree.add(20)
-      expect(tree.find(3)).to eq true
-      expect(tree.find(20)).to eq true
+      expect(tree.find(3).to_s).to eq '3'
+      expect(tree.find(20).to_s).to eq '20'
+    end
+  end
+
+  describe '#remove' do
+    context 'when remove root node' do
+    end
+    context '削除するnodeに子がいる場合' do
+    end
+    context '削除するnodeに子がいない場合' do
+      it 'remove node' do
+        tree = Tree.new(10)
+        tree.add(3)
+        expect(tree.find(3)).not_to be_nil
+        tree.remove(3)
+        expect(tree.find(3)).to be_nil
+
+        tree.add(3)
+        expect(tree.find(3)).not_to be_nil
+        tree.remove(3)
+        expect(tree.find(3)).to be_nil
+      end
     end
   end
 end
