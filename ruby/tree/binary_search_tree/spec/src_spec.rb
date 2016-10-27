@@ -75,12 +75,30 @@ describe Tree do
     context 'when remove root node' do
     end
     context '削除するnodeに子がいる場合' do
-      it 'remove node' do
-        tree = Tree.new(10)
-        tree.add(4)
-        tree.add(3)
-        tree.remove(4)
-        expect(tree.nodes[0].to_s).to eq '3'
+      context '削除するnodeの右nodeがいなくて、左だけがいる時' do
+        it 'remove node' do
+          tree = Tree.new(10)
+          tree.add(4)
+          tree.add(3)
+          tree.remove(4)
+          expect(tree.nodes[0].to_i).to eq 3
+        end
+      end
+      context '削除するnodeの右nodeがいる時' do
+        it 'remove node' do
+          tree = Tree.new(10)
+          tree.add(4)
+          tree.add(3)
+          tree.add(5)
+          tree.add(6)
+          tree.remove(4)
+          expect(tree.nodes[0].to_i).to eq 5
+          expect(tree.nodes[0].nodes[1].to_i).to eq 6
+          expect(tree.nodes[0].nodes[1].parent.to_i).to eq 5
+          expect(tree.find(5).parent.to_i).to eq 10
+          expect(tree.nodes[0].nodes[0].to_i).to eq 3
+          expect(tree.nodes[0].nodes[0].parent.to_i).to eq 5
+        end
       end
     end
     context '削除するnodeに子がいない場合' do

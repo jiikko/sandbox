@@ -1,5 +1,5 @@
 class Tree::Node
-  attr_reader :parent
+  attr_accessor :parent
 
   def initialize(i, parent: nil)
     @myself = i
@@ -102,26 +102,45 @@ class Tree::Node
   end
 
   def remove(i)
-    found_node = find(i)
-    right_lowest_node = found_node.nodes[1] && found_node.nodes[1].lowest_node
-    local_lowest_node = found_node.nodes[0] unless right_lowest_node
-    if local_lowest_node
-      n = found_node.parent.nodes[0]
-      if found_node == n
-        found_node.parent.nodes[0] = local_lowest_node
+    remove_node = find(i)
+    right_lowest_node = remove_node.nodes[1] && remove_node.nodes[1].lowest_node
+    left_lowest_node = remove_node.nodes[0] unless right_lowest_node
+    next_node = right_lowest_node || left_lowest_node
+    if next_node
+      # Swich parent pinter and children pointer
+      # 10, 4, 3, 5, 6 を入れたとして、4を削除すると
+
+      # 10.nodesのうち remove_node(4)への参照をnext_node(5)に付け替える
+      n = remove_node.parent.nodes[0]
+      if remove_node == n
+        remove_node.parent.nodes[0] = next_node
       end
-      n = found_node.parent.nodes[1]
-      if found_node == n
-        found_node.parent.nodes[1] = local_lowest_node
+      n = remove_node.parent.nodes[1]
+      if remove_node == n
+        remove_node.parent.nodes[1] = next_node
       end
+
+      # 3と5のparent参照を付け替える
+      remove_node.nodes[0].parent = next_node if remove_node.nodes[0]
+      remove_node.nodes[1].parent = next_node if remove_node.nodes[1]
+
+      # remove_node(4).nodesの参照を新しいnext_node(5)へ付け替える
+      if remove_node.nodes[0] == next_node
+        remove_node.nodes[0] = next_node.nodes[0]
+      elsif remove_node.nodes[1] == next_node
+        remove_node.nodes[1] = next_node.nodes[1]
+      end
+      next_node.parent = remove_node.parent
+      next_node.nodes[0] = remove_node.nodes[0]
+      next_node.nodes[1] = remove_node.nodes[1]
     else
-      n = found_node.parent.nodes[0]
-      if found_node == n
-        found_node.parent.nodes[0] = nil
+      n = remove_node.parent.nodes[0]
+      if remove_node == n
+        remove_node.parent.nodes[0] = nil
       end
-      n = found_node.parent.nodes[1]
-      if found_node == n
-        found_node.parent.nodes[1] = nil
+      n = remove_node.parent.nodes[1]
+      if remove_node == n
+        remove_node.parent.nodes[1] = nil
       end
     end
   end
