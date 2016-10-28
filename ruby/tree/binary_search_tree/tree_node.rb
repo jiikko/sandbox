@@ -1,4 +1,8 @@
+require './modules/formatable'
+
 class Tree::Node
+  include Formatable
+
   attr_accessor :parent
 
   def initialize(i, parent: nil)
@@ -28,20 +32,6 @@ class Tree::Node
 
   def nodes
     @children
-  end
-
-  def nodes_with_to_s
-    [ @children[0].to_s,
-      @children[1].to_s,
-    ]
-  end
-
-  def to_s
-    @myself.to_s
-  end
-
-  def to_i
-    @myself
   end
 
   def r_print(depth)
@@ -145,6 +135,16 @@ class Tree::Node
     end
   end
 
+  def collect_nodes(list = {})
+    list.merge!({ @myself => nodes_with_to_i })
+    nodes.each do |node|
+      if node
+        list.merge!(node.collect_nodes)
+      end
+    end
+    return list
+  end
+
   protected
 
   def lowest_node
@@ -152,5 +152,9 @@ class Tree::Node
       return self
     end
     nodes[0].lowest_node
+  end
+
+  def myself
+    @myself
   end
 end

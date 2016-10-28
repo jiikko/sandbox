@@ -33,4 +33,8 @@ class Tree
   def remove(i)
     node.remove(i)
   end
+
+  def to_hash
+    node.to_hash
+  end
 end
