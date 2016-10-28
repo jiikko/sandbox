@@ -99,12 +99,18 @@ describe Tree do
         context 'when deep' do
           it 'remove node' do
             tree = Tree.new(10)
-            tree.add(4)
-            tree.add(3)
-            tree.add(5)
+            tree.add(8)
+            tree.add(12)
+            tree.add(14)
+            tree.add(13)
+            tree.add(20)
             tree.add(6)
-            tree.remove(4)
-            skip
+            tree.add(9)
+            tree.add(5)
+            tree.remove(8)
+            expect(tree.nodes[0].nodes[0].to_i).to eq 6
+            expect(tree.nodes[0].nodes[0].parent.to_i).to eq 9
+            expect(tree.nodes[0].to_i).to eq 9
           end
         end
         context 'when shallow' do
