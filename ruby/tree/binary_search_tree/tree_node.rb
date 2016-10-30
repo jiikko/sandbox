@@ -97,6 +97,20 @@ class Tree::Node
     left_lowest_node = remove_node.nodes[0] unless right_lowest_node
     next_node = right_lowest_node || left_lowest_node
     if next_node
+      # 削除するnodeと昇格するnodeが子として繋がっている時
+      if !right_lowest_node
+        n = remove_node.parent.nodes[0]
+        if remove_node == n
+          remove_node.parent.nodes[0] = next_node
+        end
+        n = remove_node.parent.nodes[1]
+        if remove_node == n
+          remove_node.parent.nodes[1] = next_node
+        end
+        next_node.parent = remove_node.parent
+        return
+      end
+
       # Swich parent pinter and children pointer
       # 10, 4, 3, 5, 6 を入れたとして、4を削除すると
 

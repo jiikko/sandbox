@@ -73,6 +73,9 @@ describe Tree do
 
   describe '#remove' do
     context 'when remove root node' do
+      it 'remove node' do
+        skip
+      end
     end
     context '削除するnodeに子がいる場合' do
       context '削除するnodeの右nodeがいなくて、左だけがいる時' do
@@ -80,38 +83,104 @@ describe Tree do
           #             10
           #        03       12
           #     01    04      14
-          #       02        13  20
+          #       02       13    20 <= remove
+          #                    18 <= next
+          #                  17  19
           tree = Tree.new(10)
           tree.add(3)
           tree.add(12)
           tree.add(14)
           tree.add(13)
           tree.add(20)
+          tree.add(18)
+          tree.add(19)
+          tree.add(17)
           tree.add(4)
           tree.add(1)
           tree.add(2)
-          tree.remove(4)
-          skip
+          tree.remove(20)
           expect(tree.nodes[0].to_i).to eq 3
+          expect(tree.nodes[1].nodes[1].nodes[1].to_i).to eq 18
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[0].to_i).to eq 17
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[1].to_i).to eq 19
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[0].parent.to_i).to eq 18
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[1].parent.to_i).to eq 18
+
+          #             10
+          #        03       12
+          #     01    04      14
+          #       02       13    20
+          #                    18
+          #                  17  19
+          #                16 <= remove
+          #              15 <= next
+          tree = Tree.new(10)
+          tree.add(3)
+          tree.add(12)
+          tree.add(14)
+          tree.add(13)
+          tree.add(20)
+          tree.add(18)
+          tree.add(19)
+          tree.add(17)
+          tree.add(16)
+          tree.add(15)
+          tree.add(4)
+          tree.add(1)
+          tree.add(2)
+          tree.remove(16)
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[0].nodes[0].to_i).to eq 17
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[0].nodes[0].nodes[0].to_i).to eq 15
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[0].nodes[0].nodes[0].parent.to_i).to eq 17
+
+          #             10
+          #        03      12
+          #     01    04      14
+          #       02       13    20
+          #                    18 <= remove
+          #                  15 <= next
+          #                    16
+          tree = Tree.new(10)
+          tree.add(3)
+          tree.add(12)
+          tree.add(14)
+          tree.add(13)
+          tree.add(20)
+          tree.add(18)
+          tree.add(15)
+          tree.add(16)
+          tree.add(4)
+          tree.add(1)
+          tree.add(2)
+          tree.remove(18)
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[0].to_i).to eq 15
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[0].nodes[1].to_i).to eq 16
+          expect(tree.nodes[1].nodes[1].nodes[1].nodes[0].nodes[1].parent.to_i).to eq 15
         end
       end
-      context '削除するnodeの右nodeがいる時' do
-        context 'when deep' do
-          it 'remove node' do
-            tree = Tree.new(10)
-            tree.add(8)
-            tree.add(12)
-            tree.add(14)
-            tree.add(13)
-            tree.add(20)
-            tree.add(6)
-            tree.add(9)
-            tree.add(5)
-            tree.remove(8)
-            expect(tree.nodes[0].nodes[0].to_i).to eq 6
-            expect(tree.nodes[0].nodes[0].parent.to_i).to eq 9
-            expect(tree.nodes[0].to_i).to eq 9
-          end
+    end
+    context '削除するnodeの右nodeがいる時' do
+      context 'when deep' do
+        it 'remove node' do
+          #                       10
+          #        remove => 8              12
+          #                6   9 <= n     14  20
+          #              5              13
+          #            1
+          tree = Tree.new(10)
+          tree.add(8)
+          tree.add(12)
+          tree.add(14)
+          tree.add(13)
+          tree.add(20)
+          tree.add(6)
+          tree.add(9)
+          tree.add(5)
+          tree.add(1)
+          tree.remove(8)
+          expect(tree.nodes[0].nodes[0].to_i).to eq 6
+          expect(tree.nodes[0].nodes[0].parent.to_i).to eq 9
+          expect(tree.nodes[0].to_i).to eq 9
         end
         context 'when shallow' do
           it 'remove node' do
