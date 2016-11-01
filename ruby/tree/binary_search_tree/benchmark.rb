@@ -1,0 +1,5 @@
+require 'benchmark'
+
+[
+  50,
+
