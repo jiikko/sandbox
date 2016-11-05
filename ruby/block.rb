@@ -1,12 +1,22 @@
-def animal(&block)
-  cat(&block)
-end
+class Cat
+  def initialize(&block)
+    self.instance_eval(&block)
+  end
 
-def cat(&block)
-  yield
+  def hello
+    puts 'nyan'
+  end
 end
+Cat.new { hello }
 
 
-class Dog
+class Cat
+  def initialize(&block)
+    yield(self)
+  end
+
+  def hello
+    puts 'nyan'
+  end
 end
-animal { puts 'hell cat' }
+Cat.new { |s| s.hello }
