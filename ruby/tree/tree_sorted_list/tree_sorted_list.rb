@@ -1,4 +1,5 @@
 require 'pry'
+require 'prime'
 
 class TreeSortedList
   class << self
@@ -46,8 +47,11 @@ class TreeSortedList
   end
 
   def create_divisors(i)
-    # http://qiita.com/seinosuke/items/fde2e0471dcf937e5a09
-    # http://syoshinsyakangeisagi.blogspot.jp/2014/12/ruby_5.html
+    divisors = Prime.prime_division(i).inject([]) do |a, v|
+      v[1].times { a << v[0] }
+      a
+    end
+    divisors.sort.reverse
   end
 end
 
