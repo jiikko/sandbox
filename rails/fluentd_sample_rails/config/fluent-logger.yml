@@ -1,0 +1,6 @@
+development:
+  fluent_host:   '192.168.33.10'
+  fluent_port:   24224
+  tag:           'debug.test'
+  messages_type: 'string'
+  severity_key:  'debug'     # default severity
