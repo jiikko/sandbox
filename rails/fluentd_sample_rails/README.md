@@ -1,24 +1,28 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## ログの収集
+```shell
+bundle exec rails s
+```
 
-Things you may want to cover:
+### fluentdの起動
+```
+cat fluent.conf
+  <source>
+    @type forward
+  </source>
+  <match **>
+    @type file
+    path "./logs"
+    <buffer time>
+      path "./logs"
+    </buffer>
+  </match>
+</ROOT>
 
-* Ruby version
+fluentd -c ./fluent.conf
+```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```ruby
+1000.times { `curl -I http://localhost:3000?p=#{rand(10)}` }
+```

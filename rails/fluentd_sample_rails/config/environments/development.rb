@@ -58,6 +58,5 @@ Rails.application.configure do
     new(log_tags: {
     ip: :ip,
     ua: :user_agent,
-    uid: ->(request) { request.session[:uid] }
   })
 end

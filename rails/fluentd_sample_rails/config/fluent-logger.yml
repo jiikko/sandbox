@@ -1,5 +1,5 @@
 development:
-  fluent_host:   '192.168.33.10'
+  fluent_host:   '127.0.0.1'
   fluent_port:   24224
   tag:           'debug.test'
   messages_type: 'string'
