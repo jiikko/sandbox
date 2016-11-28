@@ -23,6 +23,11 @@ cat fluent.conf
 fluentd -c ./fluent.conf
 ```
 
+
 ```ruby
 1000.times { `curl -I http://localhost:3000?p=#{rand(10)}` }
 ```
+で実行する
+
+
+
