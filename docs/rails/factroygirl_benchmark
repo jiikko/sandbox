@@ -1,0 +1,131 @@
+#! /usr/bin/env ruby
+
+# 説明
+# * factriesは、テストコード中で呼ばれている上位25件を機械的に抽出している
+# * 本スクリプトはDBをロールバックしているので安心
+# * -b をつけて実行するとテキスト処理しやすい出力になる(バッチモード)
+#   * ./bin/factorygirl_benchmark -b
+
+def ai_puts(text = nil)
+  puts(text) unless @batch_mode
+end
+
+option = ARGV[0]
+@batch_mode = false
+
+if option&.include?('-b')
+  @batch_mode = true
+end
+
+ai_puts 'load rails...'
+$:.unshift './spec'
+require 'spec_helper'
+
+ai_puts "load all fixtures..."
+Dir["spec/fixtures/{**,*}/*.{yml}"].each do |path|
+  %r!/(\w+)\.yml! =~ path
+  # puts $1
+  ActiveRecord::FixtureSet.create_fixtures("#{Rails.root}/spec/fixtures", $1 || raise('failed load fixtures'))
+end
+master_data_tables = %i(ages facility_genre_tags prefectures regions)
+master_data_tables.each do |table|
+  ActiveRecord::FixtureSet.create_fixtures("#{Rails.root}/spec/fixtures", table)
+end
+
+module FactorygirlBenchmark
+  class Dependency
+    def initialize
+      @map = {
+        'listing_click' => {
+          listing_ad: listing_ad,
+        },
+        'listing_creative' => {
+            listing_ad: listing_ad,
+        },
+        'favorite' => {
+          favorable: FactoryGirl.create(:facility),
+          favorable_parent_id: nil,
+          parent_id: nil,
+        }
+      }
+    end
+
+    def [](key)
+      @map[key]
+    end
+
+    def before!
+      Member.destroy_all
+      Article.destroy_all
+      ArticleDataFeedSubscriber.destroy_all
+      true
+    end
+
+    private
+
+    def listing_ad
+        provider = FactoryGirl.create(:provider)
+        account = ListingAccount.ensure_on(provider, nil)
+        listing_allocation = ListingAllocation.ensure_on_subject(account, FactoryGirl.create(:facility))
+        FactoryGirl.create(:listing_ad,
+                           listing_allocation: listing_allocation)
+    end
+  end
+end
+dependency = FactorygirlBenchmark::Dependency.new
+dependency.before!
+
+result = nil
+ActiveRecord::Base.transaction do
+  # $ grep -h -r -o 'FactoryGirl.create(:[a-z_]\+' spec | sort | uniq -c| sort -nr| head -25 | grep -o '[a-z_]\+$' | sort
+  factories = %w(
+admin
+agency
+article
+article_data_feed_subscriber
+article_for_data_feed
+attraction
+event
+experience
+facility
+facility_photo
+favorite
+listing_account
+listing_ad
+listing_allocation
+listing_click
+listing_creative
+listing_deposit_provider
+news
+note
+parent
+played
+provider
+question
+ranking
+ranking_item
+  )
+  result = factories.map do |name|
+    # puts name
+    begin
+      [ name,
+        # 2回サンプリングしている
+        (Benchmark.realtime { FactoryGirl.create(name, dependency[name]) } + \
+        Benchmark.realtime { FactoryGirl.create(name, dependency[name]) }) / 2
+      ]
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid => e
+      [name, e.message.inspect]
+    end
+  end
+  raise ActiveRecord::Rollback
+end
+
+ai_puts
+ai_puts '--- result ---'
+result.each do |name, time|
+  if @batch_mode
+    puts "#{name}:#{time}"
+  else
+    puts "#{name.ljust(30)}: #{time}"
+  end
+end
