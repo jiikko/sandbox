@@ -7,14 +7,11 @@ class Trie
     end
 
     def add(string)
-      prefix_string = string[0]
-      node = @nodes.find do |child|
-        child.to_s == prefix_string
-      end
+      node = @nodes.find { |node| node.to_s == string[0] }
       if node
         string[1..-1].each_char { |char| node.add(char) }
       else
-        node = Node.new(prefix_string)
+        node = Node.new(string[0])
         node.add(string[1..-1]) if string[1..-1]
         @nodes << node
       end
