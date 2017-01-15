@@ -9,6 +9,15 @@ describe Trie do
       expect(trie.nodes.first.nodes.first.nodes.size).to eq 1
       end
     end
+    context 'dd ddd を追加する時' do
+      it 'be success' do
+        trie = Trie.new
+        trie.add('dd')
+        trie.add('ddd')
+        expect(trie.find('dd')).to eq true
+        expect(trie.find('ddd')).to eq true
+      end
+    end
   end
 
   describe '#find' do

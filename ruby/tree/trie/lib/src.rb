@@ -8,13 +8,11 @@ class Trie
 
     def add(string)
       node = @nodes.find { |node| node.to_s == string[0] }
-      if node
-        string[1..-1].each_char { |char| node.add(char) }
-      else
+      if node.nil?
         node = Node.new(string[0])
-        node.add(string[1..-1]) if string[1..-1]
         @nodes << node
       end
+      node.add(string[1..-1]) if string[1..-1] != ''
       self
     end
 
@@ -26,7 +24,7 @@ class Trie
       return true if string == ''
       node = @nodes.find { |node| node.to_s == string[0] }
       if node
-        node.find(string[1..-1])
+        return node.find(string[1..-1])
       else
         return false
       end
