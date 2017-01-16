@@ -10,6 +10,7 @@
 ```shell
 #/bin/bash
 
+sed -i '' -e 's/# driver.enable_logging/driver.enable_logging/' spec/spec_helper.rb
 export LOAD_ALL_FIXTURES_BEFORE_SUITE=yes
 if [[ $(which xvfb-run) ]]; then
   xvfb-run bundle exec rake spec:features > l1  2>&1
@@ -22,6 +23,8 @@ else
   bundle exec rake spec:features >> l1 2>&1
   bundle exec rake spec:features >> l1 2>&1
 fi
+# 冪等性なさそう
+sed -i '' -e 's/driver.enable_logging/# driver.enable_logging/' spec/spec_helper.rb
 
 cat l1 | grep 'Received 200' | \
   grep -v map.yahooapis.jp | \
@@ -30,6 +33,7 @@ cat l1 | grep 'Received 200' | \
   sed -E -e 's|from "https?://(.+)\/|\1|' | \
   sort | \
   uniq > alll
+
 ```
 
 * バックグラウンドジョブにしたかったけどプロセス毎に接続するDBをかえたい
