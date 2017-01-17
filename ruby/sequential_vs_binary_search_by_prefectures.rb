@@ -9,7 +9,7 @@ def sequential_search(id)
 end
 
 def binary_search(id)
-  prefecture_ids.bsearch { |prefecture_id| prefecture_id == id }
+  prefecture_ids.bsearch { |prefecture_id| prefecture_id >= id }
 end
 
 
