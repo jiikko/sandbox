@@ -30,13 +30,18 @@ end
 class SpecTimes < ActiveRecord::Base
 end
 
-SpecTimes.create(time: 100, spec_name: :test_queue, created_at: Time.now)
-SpecTimes.create(time: 100, spec_name: :test_queue, created_at: Time.now)
-SpecTimes.create(time: 100, spec_name: :test_queue, created_at: Time.now)
-SpecTimes.create(time: 100, spec_name: :test_queue, created_at: Time.now)
+unless SpecTimes.exists?
+  SpecTimes.create(time: 100, spec_name: :test_queue, created_at: Time.now)
+  SpecTimes.create(time: 100, spec_name: :test_queue, created_at: Time.now)
+  SpecTimes.create(time: 100, spec_name: :test_queue, created_at: Time.now)
+  SpecTimes.create(time: 100, spec_name: :test_queue, created_at: Time.now)
+  SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
+  SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
+  SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
+  SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
+  SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
+end
 
-SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
-SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
-SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
-SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
-SpecTimes.create(time: rand(100), spec_name: :model, created_at: Time.now)
+def make_test_queue
+  SpecTimes.create(time: rand(100), spec_name: :test_queue, created_at: Time.now)
+end
