@@ -125,3 +125,129 @@ where
   c.CustomerClassID = cc.CustomerClassID
 order by p.PrefecturalID asc;
 ```
+
+# 3-3-1
+複数テーブルの結合
+```sql
+select c.CategoryName, sum(s.Quantity)
+from sales s
+  join Products p
+    on s.ProductID = p.ProductID
+  join Categories c
+    on p.CategoryID = c.CategoryID
+group by p.CategoryID, c.CategoryName
+;
+```
+
+
+# 3-3-2
+```sql
+select p.PrefecturalID, p.PrefecturalName, sum(s.Quantity)
+from Customers c
+join Sales s
+  on c.CustomerID = s.CustomerID
+join Prefecturals p
+  on p.PrefecturalID = c.PrefecturalID
+group by p.PrefecturalID, p.PrefecturalName
+;
+```
+
+# 3-3-3
+```sql
+select cc.CustomerClassID, cc.CustomerClassName, max(s.Quantity)
+from Sales s
+  join Customers c
+    on s.CustomerID = c.CustomerID
+  join CustomerClasses cc
+    on c.CustomerClassID = cc.CustomerClassID
+group by cc.CustomerClassID
+;
+```
+
+# 3-3-4
+```sql
+
+select p.PrefecturalID, p.PrefecturalName, sum(s.Quantity)
+from Sales s, Prefecturals p, Customers c
+where
+  s.CustomerID = c.CustomerID and
+  c.PrefecturalID = p.PrefecturalID
+group by p.PrefecturalID, p.PrefecturalName
+;
+```
+
+# 3-3-5
+```sql
+select cc.CustomerClassID, cc.CustomerClassName, max(s.Quantity)
+from Sales s, CustomerClasses cc, Customers c
+where
+  s.CustomerID = c.CustomerID and
+  c.CustomerClassID = cc.CustomerClassID
+group by cc.CustomerClassID, cc.CustomerClassName
+;
+```
+
+# 3-4-1
+```sql
+select c.CustomerName, ifnull(sum(s.Quantity), 0)
+from Customers c
+left outer join Sales s
+  on c.CustomerID = s.CustomerID
+group by s.CustomerID, c.CustomerName
+;
+```
+
+# 3-4-2
+```sql
+select e.EmployeeName, count(e.EmployeeID), sum(Quantity)
+from Sales s
+left outer join Employees e
+  on s.EmployeeID = e.EmployeeID
+group by e.EmployeeID, e.EmployeeName
+;
+```
+
+# 3-4-3
+```sql
+select p.PrefecturalName, count(c.CustomerID) as 顧客数
+from Customers c
+  right outer join Prefecturals p
+  on c.PrefecturalID = p.PrefecturalID
+group by p.PrefecturalName
+;
+```
+
+# 3-4-4
+```sql
+select e.EmployeeID, (
+    select count(*)
+    from Sales s
+    where s.EmployeeID = e.EmployeeID
+  ) as 販売件数
+  from Employees e
+;
+```
+
+```sql
+select e.EmployeeID, ifnull(s.sc, 0)
+  from Employees e
+  left outer join (
+    select ss.EmployeeID as ssid, count(*) as sc
+    from Sales ss
+    group by ss.EmployeeID
+  ) as s
+  on e.EmployeeID = s.ssid
+  ;
+```
+
+
+# 3-4-5
+```sql
+select e.EmployeeName, ifnull(s.Amount, 0) 支給額
+from Employees e
+  left outer join Salary s
+  on
+    e.EmployeeID = s.EmployeeID and
+    s.PayDate = '2007-02-25'
+;
+```
