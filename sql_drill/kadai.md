@@ -78,3 +78,50 @@ select saleid, Quantity, CustomerID, (
   from sales
   where Quantity >= 100;
 ```
+
+# 3-2-1
+join
+```sql
+select t2.EmployeeName, t1.PayDate, t1.Amount
+from salary t1 inner join Employees t2 on t1.EmployeeID = t2.EmployeeID
+order by t2.EmployeeID;
+```
+
+# 3-2-2
+```sql
+select s.Quantity, c.CustomerName, p.ProductName, e.EmployeeName
+from Sales s, Customers c, Products p, Employees e
+where
+  s.CustomerID = c.CustomerID and
+  s.ProductID = p.ProductID and
+  s.EmployeeID = e.EmployeeID and
+  s.Quantity > 200;
+```
+```sql
+select s.Quantity, c.CustomerName, p.ProductName, e.EmployeeName
+from Sales s
+  join Customers c on s.CustomerID = c.CustomerID
+  join Products p on s.ProductID = p.ProductID
+  join Employees e on s.EmployeeID = e.EmployeeID
+where s.Quantity > 200;
+```
+
+# 3-2-3
+```sql
+select sum(s.Quantity), p.ProductID, p.ProductName
+from Sales s
+join Products p on s.ProductID = p.ProductID
+group by s.ProductID, p.ProductName
+having sum(s.Quantity) > 300
+```
+
+
+# 3-2-5
+```sql
+select c.CustomerName, p.PrefecturalName, cc.CustomerClassName
+from Customers c, Prefecturals p, CustomerClasses cc
+where
+  c.PrefecturalID = p.PrefecturalID and
+  c.CustomerClassID = cc.CustomerClassID
+order by p.PrefecturalID asc;
+```
