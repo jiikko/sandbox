@@ -251,3 +251,64 @@ from Employees e
     s.PayDate = '2007-02-25'
 ;
 ```
+
+
+# 3-5-1
+```sql
+select
+  p1.ProductName, p2.ProductName
+  from Products p1
+  inner join Products p2
+    on p1.CategoryID = p2.CategoryID and p1.ProductID < p2.ProductID
+;
+```
+
+# 3-5-2
+```sql
+select c1.CustomerName  顧客名1, c2.CustomerName 顧客名2
+from Customers c1
+inner join Customers c2
+on c1.CustomerID < c2.CustomerID and
+c1.PrefecturalID = c2.PrefecturalID and
+c1.CustomerClassID = c2.CustomerClassID
+;
+```
+
+
+
+# 3-5-3
+```sql
+select e1.EmployeeName 従業員名1, e2.EmployeeName  従業員名2, e1.EmployeeID, e2.EmployeeID
+  from Employees e1
+  inner join Employees e2
+  on
+    e1.Birthday > e2.Birthday
+order by e1.EmployeeID, e2.EmployeeID
+;
+```
+
+# 3-5-4
+```sql
+
+select c1.CategoryName カテゴリ名1, c2.CategoryName カテゴリ名2
+  from
+    Categories c1
+    inner join Categories c2
+    on
+      c1.CategoryID < c2.CategoryID
+      and
+      c1.CategoryID <> c2.CategoryID
+;
+```
+
+# 3-5-5
+```sql
+select c1.CustomerName  顧客名1, c2.CustomerName 顧客名2
+from Customers c1
+inner join Customers c2
+on c1.CustomerID < c2.CustomerID and
+c1.PrefecturalID = c2.PrefecturalID and
+c1.CustomerClassID = c2.CustomerClassID
+where c2.PrefecturalID != 13
+;
+```
