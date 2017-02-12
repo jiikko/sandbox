@@ -312,3 +312,176 @@ c1.CustomerClassID = c2.CustomerClassID
 where c2.PrefecturalID != 13
 ;
 ```
+
+# 3-6-1
+```sql
+select distinct s.ProductID, p.ProductName, Quantity
+from Sales s
+  join Products p
+    on s.ProductID = p.ProductID
+  where Quantity = (
+    select max(s2.Quantity)
+    from Sales s2
+    where s.ProductID = s2.ProductID
+  )
+  order by s.ProductID asc
+;
+```
+```sql
+-- null/0が出現してくる
+select p.ProductID, p.ProductName, ifnull((
+  select max(s.Quantity)
+    from Sales s
+    where s.ProductID = p.ProductID
+  ), 0) as Quantity
+  from Products p
+  order by p.ProductID asc
+;
+```
+```sql
+-- 相関サブクエリにならない
+-- joinテーブル
+select p.ProductID, p.ProductName, t.Quantity
+  from Products p
+  inner join (
+    select max(Quantity) as Quantity, s.ProductID
+    from Sales s
+    group by s.ProductID
+  ) as t
+  on p.ProductID = t.ProductID
+  order by p.ProductID asc
+;
+```
+
+# 3-6-2
+```sql
+-- 相関サブクエリ
+select p.ProductID, p.ProductName
+from Products p
+where exists (
+  select 'x'
+  from Sales s
+  where p.ProductID = s.ProductID
+)
+;
+```
+```sql
+-- 相関サブクエリ. 結合方向が非効率
+select distinct s.ProductID, p.ProductName
+  from Sales s
+  inner join Products p
+  on s.ProductID = p.ProductID
+  where exists (
+    select 'x'
+    from Products pp
+    where pp.ProductID = s.ProductID
+  )
+;
+```
+```sql
+-- rails で`Products.joins(:sales).distinct で吐かれるSQL`
+select distinct s.ProductID, p.ProductName
+  from Products p
+  inner join Sales s
+  on s.ProductID = p.ProductID
+;
+```
+```sql
+-- distinctが不要になる. 1対1になるように結合している
+select p.ProductID, p.ProductName
+  from Products p
+  inner join (
+    select s.ProductID as ProductID
+    from Sales s
+    group by s.ProductID
+  ) s
+  on p.ProductID = s.ProductID
+;
+```
+
+# 3-6-3
+```sql
+-- 相関サブクエリ
+select p.ProductID, p.ProductName
+  from Products p
+  where
+    not exists (
+      select 'x'
+      from Sales s
+      where p.ProductID = s.ProductID
+    )
+;
+```
+```sql
+-- rails で`Products.where.not(id: Products.joins(:sales).distinct) で吐かれるSQL`
+select p.ProductID, p.ProductName
+  from Products p
+  where
+    p.ProductID not in (
+      select pp.ProductID
+      from Products pp
+      inner join (
+        select s.ProductID ProductID
+        from Sales s
+        group by s.ProductID
+      ) s
+      on pp.ProductID = s.ProductID
+    )
+;
+```
+
+```sql
+-- 結合して存在しないレコードを抽出している
+select p.ProductID, p.ProductName
+  from Products p
+  left outer join Sales s
+  on p.ProductID = s.ProductID
+  where s.ProductID is null
+;
+```
+
+
+* join
+  * inner, outer
+    * from句に結合条件を書く
+* 相関サブクエリ
+* where にサブクエリをかく(not相関)
+  * 集合関数使っていると無理？
+
+# 3-6-5
+```sql
+-- 計算してから結合しているのでコストが安い
+select p.ProductID, p.ProductName
+  from Products p
+  inner join (
+    select max(ss.Quantity) max, avg(ss.Quantity) avg, ss.ProductID
+    from Sales ss
+    group by ss.ProductID
+  ) s
+  on s.ProductID = p.ProductID
+  where (s.max / 10) > s.avg
+  order by p.ProductID
+;
+```
+```sql
+-- 相関サブクエリ
+select p.ProductID, p.ProductName
+  from Products p
+  inner join (
+    select t.ProductID
+    from Sales t
+    group by t.ProductID
+  ) s
+  on s.ProductID = p.ProductID
+  where ((
+    select max(ss.Quantity)
+    from Sales ss
+    where ss.ProductID = s.ProductID
+  ) / 10) > (
+    select avg(sss.Quantity)
+    from Sales sss
+    where sss.ProductID = s.ProductID
+  )
+  order by p.ProductID
+;
+```
