@@ -1,4 +1,6 @@
 # mruby Tutorial
+* Hello Worldしてみる
+  * https://github.com/mruby/mruby/wiki/Hello-World
 * mruby 本読む
 * mruby 各年のアドベントカレンダーを読む
   * http://qiita.com/advent-calendar/2013/mruby
