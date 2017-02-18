@@ -22,3 +22,21 @@
 * コンパイルを追う
   * http://qiita.com/masuidrive/items/e516c23b4feab73d139f
   * https://github.com/mruby/mruby/blob/master/doc/guides/compile.md
+
+## あとで調べる
+* 同一contextでローカル変数を参照できない
+```
+#include <stdio.h>
+#include <mruby.h>
+#include <mruby/compile.h>
+
+int main(void) {
+  mrb_state *mrb = mrb_open();
+  mrbc_context *cxt = mrbc_context_new(mrb);
+  mrb_value v;
+  v = mrb_load_string_cxt(mrb, "print '[1]'; name = 'john'; p name; def hoge; 'foo'; end", cxt); // [1]"john"
+  v = mrb_load_string_cxt(mrb, "print '[2]'; print name; p hoge", cxt); // [2]"foo"
+  mrb_close(mrb);
+  return 0;
+}
+```
