@@ -11,6 +11,7 @@
 * cでmrubyを実行してmrubyからhello worldする
 * cでハッシュクラス自作記事を写経する
   * http://qiita.com/cubicdaiya/items/fc0620c7b9629bb85d6f
+* mrb_generate_code, mrb_load_string それぞれが評価するまでのコードを読む
 * 公式ドキュメントを読む
   * https://github.com/mruby/mruby/tree/master/doc
 * 適当なhttpリクエストを送るmrbgemを読んでみる
