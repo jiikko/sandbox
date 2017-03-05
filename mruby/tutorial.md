@@ -14,12 +14,13 @@
 * mrb_generate_code, mrb_load_string それぞれが評価するまでのコードを読む
 * 公式ドキュメントを読む
   * https://github.com/mruby/mruby/tree/master/doc
+* mirbが作られるまでの処理を追う
+  * http://qiita.com/masuidrive/items/e516c23b4feab73d139f
+  * https://github.com/mruby/mruby/blob/master/doc/guides/compile.md
+* 手動でmirbを作ってみる
 * 適当なhttpリクエストを送るmrbgemを読んでみる
 * httpリクエストを送るmrbgemを作ってみる
 * Stringクラスを読んで見る
 
 ## toolcain
 * mgemの仕組み的なのを追う
-* コンパイルを追う
-  * http://qiita.com/masuidrive/items/e516c23b4feab73d139f
-  * https://github.com/mruby/mruby/blob/master/doc/guides/compile.md
