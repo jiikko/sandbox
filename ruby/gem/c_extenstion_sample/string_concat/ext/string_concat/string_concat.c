@@ -5,19 +5,15 @@
 
 VALUE rb_mStringConcat;
 
-VALUE bar_func(VALUE self)
-{
-  puts("hellp!!!!");
-  return self;
-}
 
-
-void strcat_by_count(char* string, int count){
-  char *hello = "helllo";
-  for(int i = 0; i < count; i++) {
-    strcat(string, hello);
+VALUE strcat_by_count(VALUE self, VALUE string, VALUE count){
+  char* word = StringValuePtr(string);
+  char base[100000] = "";
+  int c = NUM2INT(count);
+  for(int i = 0; i < c; i++) {
+    strcat(base, word);
   }
-  return;
+  return rb_str_new2(base);
 }
 
 
@@ -25,7 +21,10 @@ void
 Init_string_concat(void)
 {
   rb_mStringConcat = rb_define_module("StringConcat");
-  rb_define_method(rb_mStringConcat, "strcat_by_count", RUBY_METHOD_FUNC(bar_func), 0);
-  // rb_define_method(rb_mStringConcata, "strcat_by_count", strcat_by_count, 0);
+  rb_define_singleton_method(rb_mStringConcat, "concat", RUBY_METHOD_FUNC(strcat_by_count), 2);
 }
 
+// String.new('gg').extend(StringConcat).strcat_by_count
+//
+// require 'benchmark'; Benchmark.benchmark { |b| b.report { 100.times { 'ggg' * 10000 } }}
+// require 'benchmark'; Benchmark.benchmark { |b| b.report { 100.times { StringConcat.concat('ggg', 10000) } } }
