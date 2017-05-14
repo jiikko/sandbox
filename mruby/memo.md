@@ -99,3 +99,13 @@ $ gcc -o javari_park javari_park.c animals.a
 ./javari_park
 ワン！にゃーん
 ```
+
+* http://resemblances.click3.org/?p=1625
+* http://resemblances.click3.org/?p=1594
+* http://qiita.com/akiray03/items/d6f29db921ff680bc699
+* http://qiita.com/cubicdaiya/items/fc0620c7b9629bb85d6f
+* http://qiita.com/miura1729/items/822a18051e8a97244dc3
+* http://qiita.com/ore_public/items/b9adf10dfbfae433853e
+* http://qiita.com/advent-calendar/2016/mruby
+* http://qiita.com/ore_public/items/ea62c934839c5e2f87ef
+* http://udzura.hatenablog.jp/entry/2016/12/06/113404
