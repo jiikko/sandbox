@@ -2,23 +2,18 @@
 
 VALUE rb_mFib;
 
+int fib_internal(int n)
+{
+    if (n < 2) {
+        return n;
+    } else {
+      return fib_internal(n-1)+fib_internal(n-2);
+    }
+}
 
 VALUE fib(VALUE self, VALUE n)
 {
-    VALUE n1, n2;
-    if (NUM2INT(n) < 2) {
-        return n;
-    } else {
-      n1 = fib(
-          self,
-          INT2NUM(NUM2INT(n) - 1)
-      );
-      n2 = fib(
-          self,
-          INT2NUM(NUM2INT(n) - 2)
-      );
-      return INT2NUM(NUM2INT(n1) + NUM2INT(n2));
-    }
+    return INT2NUM(fib_internal(NUM2INT(n)));
 }
 
 
