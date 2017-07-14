@@ -25,5 +25,17 @@ HappyBottons::Engine.routes.draw do
 end
 ```
 
-
 http://localhost:3000/happy_bottons にアクセスすると `top#index` が表示される
+
+## rails generate で testunit の生成物を抑止する
+```ruby
+module HappyBottons
+  class Engine < ::Rails::Engine
+    isolate_namespace HappyBottons
+
+    config.generators do |g|
+      g.test_framework :rspec, fixture: false
+    end
+  end
+end
+```
