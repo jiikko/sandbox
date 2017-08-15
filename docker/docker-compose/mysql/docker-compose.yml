@@ -1,0 +1,20 @@
+version: '2'
+services:
+  master:
+    image: mysql
+    ports:
+      - '1111:3306'
+    environment:
+      - MYSQL_DATABASE=outing_development
+      - MYSQL_ROOT_PASSWORD=pass
+    volumes:
+      - /home/vagrant/master:/etc/mysql/conf.d
+  slave:
+    image: mysql
+    ports:
+      - '2222:3306'
+    environment:
+      - MYSQL_DATABASE=outing_development
+      - MYSQL_ROOT_PASSWORD=pass
+    volumes:
+      - /home/vagrant/slave:/etc/mysql/conf.d
