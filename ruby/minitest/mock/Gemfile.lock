@@ -1,0 +1,37 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    coderay (1.1.2)
+    method_source (0.9.0)
+    minispec-metadata (3.3.0)
+      minitest
+    minitest (5.10.3)
+    minitest-power_assert (0.3.0)
+      minitest
+      power_assert (>= 1.1)
+    minitest-rg (5.2.0)
+      minitest (~> 5.0)
+    minitest-stub_any_instance (1.0.1)
+    power_assert (1.1.0)
+    pry (0.11.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-doc (0.11.1)
+      pry (~> 0.9)
+      yard (~> 0.9)
+    yard (0.9.9)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  minispec-metadata
+  minitest
+  minitest-power_assert
+  minitest-rg
+  minitest-stub_any_instance
+  pry
+  pry-doc
+
+BUNDLED WITH
+   1.16.0.pre.2

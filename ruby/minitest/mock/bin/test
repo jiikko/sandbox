@@ -1,0 +1,4 @@
+#!/bin/bash
+
+DEFAULT_TEST_DIR=test/*
+ruby $DEFAULT_TEST_DIR --rg
