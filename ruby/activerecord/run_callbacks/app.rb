@@ -35,6 +35,7 @@ class Post < ActiveRecord::Base
   after_create { puts 'I am called by after_create' }
   after_create_commit { puts 'I am called by after_create_commit' }
   after_save { puts 'I am called by after_save' }
+  after_validation { puts 'I am called by after_validation' }
   before_create { puts 'I am called by before_create' }
   before_save { puts 'I am called by before_save' }
   before_update { puts 'I am called by before_update' }
@@ -52,16 +53,12 @@ puts '-----------'
 puts 'when run_callbacks(:save) with block to include true'
 post.run_callbacks(:save) { true }
 
-puts '-----------'
-puts 'when run_callbacks(:create) without block'
-post.run_callbacks(:create)
-puts '-----------'
-puts 'when run_callbacks(:create) with block to include false'
+puts '-----------' puts 'when run_callbacks(:create) without block' post.run_callbacks(:create) puts '-----------' puts 'when run_callbacks(:create) with block to include false'
 post.run_callbacks(:create) { false }
 puts '-----------'
-puts 'when run_callbacks(:create) with block to include true'
-post.run_callbacks(:create) { true }
+post.run_callbacks(:destroy)
 puts '-----------'
+
 
 # -----------
 # when run_callbacks(:save) without block
@@ -86,3 +83,20 @@ puts '-----------'
 # I am called by before_create
 # I am called by after_create
 # -----------
+
+
+Post.new.instance_eval { self.run_callbacks(:create) { save } }
+# I am called by before_create
+# D, [2017-10-08T12:11:17.351295 #90931] DEBUG -- :    (0.1ms)  begin transaction
+# I am called by before_validation
+# I am called by after_validation
+# I am called by before_save
+# I am called by before_create
+# D, [2017-10-08T12:11:17.352116 #90931] DEBUG -- :   SQL (0.1ms)  INSERT INTO "posts" DEFAULT VALUES
+# I am called by after_create
+# I am called by after_save
+# D, [2017-10-08T12:11:17.352412 #90931] DEBUG -- :    (0.0ms)  commit transaction
+# I am called by after_create_commit
+# I am called by after_commit
+# I am called by after_create
+# => true
