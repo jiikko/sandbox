@@ -3,10 +3,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Logo from './components/logo';
+import TextareaCounter from './components/textarea_counter';
 
 ReactDOM.render(
-  <h1>
+  <div>
+    <h1>
     <Logo /> アプリケーションにようこそ！
-  </h1>,
+    </h1>
+    <TextareaCounter text={'hhhhhhhhhhhhh'} />
+  </div>
+  ,
   document.getElementById('app')
 );
