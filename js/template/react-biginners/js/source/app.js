@@ -11,6 +11,7 @@ ReactDOM.render(
     <Logo /> アプリケーションにようこそ！
     </h1>
     <TextareaCounter text={'hhhhhhhhhhhhh'} />
+    <br />
   </div>
   ,
   document.getElementById('app')
