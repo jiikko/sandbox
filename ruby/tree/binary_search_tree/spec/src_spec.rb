@@ -26,6 +26,8 @@ describe Tree do
       expect(tree.nodes[0].nodes[0].to_s).to eq '1'
       expect(tree.nodes[0].nodes[1].to_s).to eq '4'
       expect(tree.nodes[0].nodes[0].nodes[1].to_s).to eq '2'
+      binding.pry
+      tree.tree_view
     end
   end
 

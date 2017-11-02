@@ -37,4 +37,8 @@ class Tree
   def to_hash
     node.to_hash
   end
+
+  def tree_view
+    node.tree_view
+  end
 end

@@ -1,7 +1,9 @@
 require './modules/formatable'
+require './modules/printer'
 
 class Tree::Node
   include Formatable
+  include Printer
 
   attr_accessor :parent
 
