@@ -39,6 +39,6 @@ class Tree
   end
 
   def tree_view
-    node.tree_view
+    node.tree_view(root: true)
   end
 end
