@@ -6,6 +6,7 @@ preload_app!
 rackup      DefaultRackup
 
 on_worker_boot do
+  # pid ファイルを書き出しすぐにTERMできるようにする
   puts 'start...'
   sleep(2)
   puts 'ok'
