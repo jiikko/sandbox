@@ -55,7 +55,7 @@ end
 t = Thread.start do
   Thread.current[:stdout] = StringIO.new
   STDOUT.puts(Thread.current[:stdout].string)
-  Rack::Server.new(app: app, Port: 8080).start
+  Rack::Server.new(app: app, Port: 8080, config: 'puma_config').start
 end
 
 trap :INT do
