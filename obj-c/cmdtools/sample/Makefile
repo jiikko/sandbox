@@ -1,2 +1,2 @@
 compile:
-	gcc -o ttt main.m anyClass.m -framework Foundation
+	gcc -o out main.m anyClass.m -framework Foundation
