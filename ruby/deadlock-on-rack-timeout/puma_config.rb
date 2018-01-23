@@ -1,7 +1,8 @@
 # kill -TERM `cat puma.pid`
 # kill -USR2 `cat puma.pid`
 pidfile 'puma.pid'
-workers 2
+workers 1
+threads 5, 5
 preload_app!
 
 on_worker_shutdown do
