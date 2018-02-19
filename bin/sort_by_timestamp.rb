@@ -4,6 +4,7 @@
 file = File.open(ARGV[0])
 list = []
 file.each_line do |line|
+  line = line.gsub(%r!^app_log/.+\.log\.gz:!, '')
   time = line.scrub('').split(" ").first
   list << { time: time, line: line }
 end
