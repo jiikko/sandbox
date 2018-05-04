@@ -29,8 +29,8 @@ class Block
       self.new(
         index: 0,
         prev_hash: '0',
-        timestamp: Time.now.to_i,
-        data: 'I am denesis block!',
+        timestamp: 1512779478,
+        data: 'I am genesis block!',
       )
     end
   end

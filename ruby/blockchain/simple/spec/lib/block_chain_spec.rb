@@ -4,7 +4,7 @@ describe BlockChain do
   describe '#get_latest_block' do
     context 'when empty chain' do
       it 'get genesis block' do
-        expect(BlockChain.new.get_latest_block.data).to eq("I am denesis block!")
+        expect(BlockChain.new.get_latest_block.data).to eq("I am genesis block!")
       end
     end
   end
@@ -32,7 +32,6 @@ describe BlockChain do
         return_value = block_chain.add_block(next_block)
         expect(return_value).to eq(true)
       end
-
       it 'be success to add to list in block_chain' do
         block_chain = BlockChain.new
         next_block = block_chain.generate_next_block('second')

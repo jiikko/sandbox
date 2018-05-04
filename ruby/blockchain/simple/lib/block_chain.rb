@@ -69,12 +69,20 @@ class BlockChain
   end
 
   class << self
-    def is_valid_chai?(block_chain_to_validate)
-      # TODO
+    def is_valid_chain?(block_chain_to_validate)
+      return false if !block_chain_to_validate.blocks[0].equeal?(BlockChain.get_genesis_block)
+      tmp_blocks = [block_chain_to_validate.blocks[0]]
+      block_chain_to_validate.blocks[1..-1].each.with_index(1) do |block, i|
+        if block_chain_to_validate.is_valid_new_block?(block, tmp_blocks[i - 1])
+          tmp_blocks << block
+        else
+          return false
+        end
+      end
     end
 
     def get_genesis_block
       Block.genesis
     end
-    end
   end
+end
