@@ -62,6 +62,17 @@ end
 # ) ENGINE=InnoDB AUTO_INCREMENT=60001 DEFAULT CHARSET=utf8
 # 1 row in set (0.00 sec)
 
+
+# irb(main):093:0> menu.menu_items.where.not(category: nil).count
+# D, [2018-06-01T23:15:19.780740 #38640] DEBUG -- :    (112.3ms)  SELECT COUNT(*) FROM `menu_items` WHERE `menu_items`.`menu_id` = 1 AND (`menu_items`.`category_id` IS NOT NULL)
+# => 40000
+# irb(main):094:0> menu.menu_items.where(category: nil).count
+# D, [2018-06-01T23:15:22.688323 #38640] DEBUG -- :    (139.1ms)  SELECT COUNT(*) FROM `menu_items` WHERE `menu_items`.`menu_id` = 1 AND `menu_items`.`category_id` IS NULL
+# => 20000
+# irb(main):095:0> menu.menu_items.count
+# D, [2018-06-01T23:15:29.301139 #38640] DEBUG -- :    (27.9ms)  SELECT COUNT(*) FROM `menu_items` WHERE `menu_items`.`menu_id` = 1
+# => 60000
+
 menu = Menu.last
 
 # slow
