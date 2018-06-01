@@ -88,6 +88,9 @@ menu.menu_items.where(category_id: menu.categories.ids).maximum(:updated_at)
 menu.menu_items.where.not(category: nil).maximum(:updated_at)
 
 # slow
+menu.menu_items.where.not(category: nil).order('menu_items.updated_at desc').maximum(:updated_at)
+
+# slow
 # (38.8ms)  SELECT MAX(`menu_items`.`updated_at`) FROM `menu_items` WHERE `menu_items`.`menu_id` = 1 AND `menu_items`.`category_id` IN (SELECT `categories`.`id` FROM `categories` WHERE `categories`.`menu_id` = 1)
 menu.menu_items.where(category: menu.categories).maximum(:updated_at)
 
@@ -98,3 +101,7 @@ menu.menu_items.joins(:category).maximum(:updated_at)
 # fast
 # (0.7ms)  SELECT  `menu_items`.`updated_at` FROM `menu_items` INNER JOIN `categories` ON `categories`.`id` = `menu_items`.`category_id` WHERE `menu_items`.`menu_id` = 1 ORDER BY menu_items.updated_at desc LIMIT 1
 menu.menu_items.joins(:category).order('menu_items.updated_at desc').limit(1).pluck(:updated_at).first
+
+# fast
+# (0.7ms)  SELECT  `menu_items`.* FROM `menu_items` WHERE `menu_items`.`menu_id` = 1 AND (`menu_items`.`category_id` IS NOT NULL) ORDER BY menu_items.updated_at desc LIMIT 1
+menu.menu_items.where.not(category: nil).order('menu_items.updated_at desc').limit(1)
