@@ -21,7 +21,12 @@ class MenuItem < ActiveRecord::Base
     t.integer :category_id, null: true
     t.timestamps null: false
   end
+  ActiveRecord::Migration.remove_index :menu_items, [:menu_id, :updated_at]
   ActiveRecord::Migration.add_index :menu_items, [:menu_id, :updated_at]
+  ActiveRecord::Migration.add_index :menu_items, [:menu_id, :updated_at, :category_id]
+  ActiveRecord::Migration.remove_index :menu_items, [:menu_id, :updated_at, :category_id]
+  ActiveRecord::Migration.add_index :menu_items, [:menu_id, :category_id, :updated_at]
+  ActiveRecord::Migration.add_index :menu_items, [:updated_at]
 end
 
 class Category< ActiveRecord::Base;
@@ -99,9 +104,25 @@ menu.menu_items.where(category: menu.categories).maximum(:updated_at)
 menu.menu_items.joins(:category).maximum(:updated_at)
 
 # fast
+# updated_at の新しいレコードがnilだと遅い
 # (0.7ms)  SELECT  `menu_items`.`updated_at` FROM `menu_items` INNER JOIN `categories` ON `categories`.`id` = `menu_items`.`category_id` WHERE `menu_items`.`menu_id` = 1 ORDER BY menu_items.updated_at desc LIMIT 1
 menu.menu_items.joins(:category).order('menu_items.updated_at desc').limit(1).pluck(:updated_at).first
 
+# fast(ActiveRecord::Migration.add_index :menu_items, [:menu_id, :category_id, :updated_at])
+# updated_at の新しいレコードがnilでも早い
+# (0.8ms)  SELECT  `menu_items`.`updated_at` FROM `menu_items` INNER JOIN `categories` ON `categories`.`id` = `menu_items`.`category_id` WHERE `menu_items`.`menu_id` = 1 ORDER BY category_id desc, menu_items.updated_at desc LIMIT 1
+menu.menu_items.joins(:category).order('category_id desc, menu_items.updated_at desc').limit(1).pluck(:updated_at).first
+menu.menu_items.where.not(category: nil).order('category_id desc, menu_items.updated_at desc').limit(1).pluck(:updated_at).first
+
 # fast
+# updated_at の新しいレコードがnilだと遅い
 # (0.7ms)  SELECT  `menu_items`.* FROM `menu_items` WHERE `menu_items`.`menu_id` = 1 AND (`menu_items`.`category_id` IS NOT NULL) ORDER BY menu_items.updated_at desc LIMIT 1
-menu.menu_items.where.not(category: nil).order('menu_items.updated_at desc').limit(1)
+menu.menu_items.where.not(category: nil).order('menu_items.updated_at desc').limit(1).pluck(:updated_at).first
+
+
+# 全部早くする
+menu.menu_items.where.not(category: nil).maximum(:updated_at)
+menu.menu_items.where(category: nil).maximum(:updated_at)
+menu.menu_items.maximum(:updated_at)
+
+# ActiveRecord::Migration.add_index :menu_items, [:menu_id, :category_id, :updated_at]
