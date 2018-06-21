@@ -6,4 +6,5 @@ source "https://rubygems.org"
 # gem 'mysql2', '~> 0.3.17'
 gem "activerecord"
 gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'activerecord-import'
 gem "sugoi_bulk_insert"
