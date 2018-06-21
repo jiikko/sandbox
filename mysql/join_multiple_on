@@ -1,0 +1,8 @@
+menu_items2
+
+
+ActiveRecord::Migration.create_table self.table_name do |t|
+t.string :name, null: false
+t.integer :menu_id, null: false, index: true
+t.timestamps null: false
+end
