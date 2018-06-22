@@ -58,3 +58,21 @@ explain SELECT max(updated_at) FROM `menu_items` WHERE (menu_id = 1 and category
 ## all max => fast
 ## using (index [:menu_id, :updated_at])
 SELECT max(updated_at) FROM `menu_items` WHERE menu_id = 1;
+
+
+
+mysql> explain sELECT `menu_items`.* FROM menu_items WHERE (updated_at BETWEEN '2010-12-31 15:00:00' AND '2018-06-21 12:36:33' and menu_id = 1 and id > 101298 and category_id is not null) order by id desc limit 100\G
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: menu_items
+   partitions: NULL
+         type: range
+possible_keys: PRIMARY,index_menu_items_on_id_and_menu_id_and_updated_at,index_all,old_index,index_menu_items_on_menu_id_and_updated_at_and_category_id,index_menu_items_on_menu_id_and_category_id_and_category_id
+          key: index_menu_items_on_menu_id_and_category_id_and_category_id
+      key_len: 9
+          ref: NULL
+         rows: 500
+     filtered: 5.55
+        Extra: Using index condition; Using where; Using filesort
+1 row in set, 1 warning (0.00 sec)
