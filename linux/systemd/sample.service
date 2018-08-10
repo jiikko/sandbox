@@ -1,0 +1,19 @@
+ExecReload=/bin/kill -HUP $MAINPID
+
+
+
+
+[Unit]
+Description=sample service
+
+[Service]
+ExecStart=/usr/bin/ruby /tmp/sample.service.rb
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=notify
+
+[Install]
+WantedBy=multi-user.target
+Alias=sshd.service

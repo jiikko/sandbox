@@ -1,0 +1,9 @@
+[Unit]
+Description=sample service
+
+[Service]
+ExecStart=/bin/ps
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
