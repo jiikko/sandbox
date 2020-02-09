@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Heading from './heading';
@@ -15,4 +17,4 @@ export class Render {
   }
 }
 
-export default new Render('waiwai');
+export default new Render('frontend');
