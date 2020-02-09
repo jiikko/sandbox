@@ -5,6 +5,9 @@
     "es6": true
   },
   "parser": "babel-eslint",
+  "rules": {
+    "no-console": "off"
+  },
   "parserOptions": {
     FecmaFeatures": { 
       "jsx": true
