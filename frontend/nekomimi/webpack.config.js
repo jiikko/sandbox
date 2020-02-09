@@ -8,7 +8,7 @@ const dist = path.join(__dirname, 'dist');
 
 module.exports = {
   mode: 'development',
-  entry: path.resolve(src, 'js/index.js'),
+  entry: path.resolve(src, 'js/render.jsx'),
   output: {
     filename: 'index.bundle.js',
     path: dist
@@ -33,6 +33,8 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      template: path.resolve(src, 'html/index.html')
+    })
   ]
 }
