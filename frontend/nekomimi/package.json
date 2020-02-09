@@ -29,7 +29,8 @@
     "build:dev": "webpack --config webpack.config.js",
     "server": "webpack-dev-server --config webpack.config.js",
     "lint": "eslint './src/js/*.{js,jsx}'",
-    "prettier": "prettier --write './src/js/*.{js,jsx}'"
+    "prettier": "prettier --write './src/js/*.{js,jsx}'",
+    "flow": "flow"
   },
   "dependencies": {
     "react": "^16.12.0",
