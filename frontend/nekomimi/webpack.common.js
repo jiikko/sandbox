@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSEXtractPlugin = require('mini-css-extract-plugin');
 
 const src = path.join(__dirname, 'src');
+const prodMode = process.env.NODE_ENV === 'production';
 
 module.exports = {
   entry: path.resolve(src, 'js/render.jsx'),
@@ -38,7 +39,7 @@ module.exports = {
       template: path.resolve(src, 'html/index.html')
     }),
     new MiniCSSEXtractPlugin({
-      filename: 'app.css',
+      filename: prodMode ? 'app.min.css' : 'app.css',
     }),
   ]
 }

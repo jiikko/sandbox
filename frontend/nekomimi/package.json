@@ -13,6 +13,7 @@
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
+    "csswring": "^7.0.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-loader": "^3.0.3",
@@ -33,11 +34,12 @@
     "stylelint-config-standard": "^20.0.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.10.3",
+    "webpack-merge": "^4.2.2"
   },
   "scripts": {
     "build:dev": "webpack --config webpack.dev.js",
-    "build:prod": "webpack --config webpack.prod.js",
+    "build:prod": "NODE_ENV=production webpack --config webpack.prod.js",
     "server": "webpack-dev-server --config webpack.dev.js",
     "lint:js": "eslint './src/js/*.{js,jsx}'",
     "lint:css": "stylelint './src/css/*.css'",
