@@ -9,7 +9,7 @@ type Props = {
 
 const Heading = (props: Props) => {
   const { name } = props;
-  return <h1 className={styles.text}>{`Hello ${name} World!`}</h1>;
+  return <h2 className={styles.text}>{`Hello ${name} World!`}</h2>;
 };
 
 export default Heading;
