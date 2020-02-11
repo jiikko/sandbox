@@ -45,6 +45,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(src, 'html/index.html')
     }),
-    new MiniCSSEXtractPlugin()
+    new MiniCSSEXtractPlugin({
+      filename: 'app.css',
+    })
   ]
 }
