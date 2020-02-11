@@ -2,6 +2,7 @@ const path = require('path');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCSSEXtractPlugin = require('mini-css-extract-plugin');
 
 const src = path.join(__dirname, 'src');
 const dist = path.join(__dirname, 'dist');
@@ -27,6 +28,10 @@ module.exports = {
       { test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      { test: /\.css$/,
+        exclude: /node_modules/,
+        use: [MiniCSSEXtractPlugin.loader, 'css-loader']
       }
     ]
   },
@@ -39,6 +44,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(src, 'html/index.html')
-    })
+    }),
+    new MiniCSSEXtractPlugin()
   ]
 }

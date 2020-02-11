@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Heading from './heading';
+import '../css/index.css';
 
 export class Render {
   constructor(targetId: string) {
