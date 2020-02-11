@@ -1,5 +1,5 @@
 { 
-  "extends": ["airbnb", "plugi:flowtype/recommended"],
+  "extends": ["airbnb", "plugin:flowtype/recommended"],
   "env": {
     "browser": true,
     "es6": true
