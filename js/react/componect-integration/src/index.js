@@ -1,3 +1,4 @@
+// http://var.blog.jp/archives/80105018.html
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -50,6 +51,8 @@ class Parent extends React.Component {
     )
   }
 }
+
+
 
 ReactDOM.render(
   <Parent/>,
