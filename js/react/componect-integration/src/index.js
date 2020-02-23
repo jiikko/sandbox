@@ -1,44 +1,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 
-class Parent extends React.Component {
-	render() {
-		return (
-			<div>
-				<div>
-					<Child/>
-					<Child/>
-					<Child/>
-				</div>
-				<button>Clear A</button>
-			</div>
-		)
-	}
+class Child extends React.Component {
+  state = { a: 0, b: 0 }
+  constructor(props) {
+    super(props)
+    props.onInit(this)
+  }
+  up = () => {
+    this.setState(s => ({a: s.a + 1, b: s.b + 1}))
+  }
+  clear() {
+    this.setState({ a: 0 })
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.a},
+        {this.state.b}
+        <button onClick={this.up}>Up</button>
+      </div>
+    )
+  }
 }
 
-class Child extends React.Component {
-	state = { a: 0, b: 0 }
-	up = () => {
-		this.setState(s => ({a: s.a + 1, b: s.b + 1}))
-	}
-	render() {
-		return (
-			<div>
-				{this.state.a},
-				{this.state.b}
-				<button onClick={this.up}>Up</button>
-			</div>
-		)
-	}
+class Parent extends React.Component {
+  children = []
+  clear = () => {
+    this.children.forEach(c => c.clear())
+  }
+  addChildRef = (instance) => {
+    this.children.push(instance)
+  }
+
+  render() {
+    return (
+      <div>
+        <div>
+          <Child onInit={this.addChildRef} />
+          <Child onInit={this.addChildRef} />
+          <Child onInit={this.addChildRef} />
+        </div>
+        <button onClick={this.clear}>Clear A</button>
+      </div>
+    )
+  }
 }
 
 ReactDOM.render(
-	<Parent/>,
-	document.getElementById("root")
+  <Parent/>,
+  document.getElementById("root")
 )
 
 // If you want your app to work offline and load faster, you can change
