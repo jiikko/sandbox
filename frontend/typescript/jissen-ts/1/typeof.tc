@@ -1,0 +1,6 @@
+type SomeType = {
+  foo: string
+}
+
+let someKey: keyof SomeType
+console.log(someKey)
