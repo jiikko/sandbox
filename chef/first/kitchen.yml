@@ -1,0 +1,20 @@
+---
+driver:
+  name: docker
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: amazonlinux
+    driver_config:
+      platform: rhel
+      image: amazonlinux:2016.09
+
+suites:
+  - name: default
+    run_list:
+    attributes:
+  - name: production
+    run_list: 
+      - 'recipe[hogehoge-wai::default]'

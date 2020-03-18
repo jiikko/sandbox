@@ -1,0 +1,4 @@
+source "https://api.berkshelf.com"
+
+cookbook 'apache2', '~> 3.0.0'
+cookbook 'passenger_apache2'

@@ -1,0 +1,9 @@
+---
+username: kitchen
+ssh_key: "/Users/koji/src/sandbox/chef/first/.kitchen/docker_id_rsa"
+image_id: 8c2eecd21063
+container_id: 879b854a58890c6f4d35ad8bbe2f0a099b4f517e0c3054a6c108ab7604bd0956
+hostname: localhost
+port: 32791
+last_action: create
+last_error: Kitchen::ActionFailed

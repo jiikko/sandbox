@@ -5,30 +5,6 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 
-class Child extends React.Component {
-  state = { a: 0, b: 0 }
-  constructor(props) {
-    super(props)
-    props.onInit(this)
-  }
-  up = () => {
-    this.setState(s => ({a: s.a + 1, b: s.b + 1}))
-  }
-  clear() {
-    this.setState({ a: 0 })
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.a},
-        {this.state.b}
-        <button onClick={this.up}>Up</button>
-      </div>
-    )
-  }
-}
-
 class Parent extends React.Component {
   children = []
   clear = () => {
@@ -52,6 +28,29 @@ class Parent extends React.Component {
   }
 }
 
+class Child extends React.Component {
+  state = { a: 0, b: 0 }
+  constructor(props) {
+    super(props)
+    props.onInit(this)
+  }
+  up = () => {
+    this.setState(s => ({a: s.a + 1, b: s.b + 1}))
+  }
+  clear() {
+    this.setState({ a: 0 })
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.a},
+        {this.state.b}
+        <button onClick={this.up}>Up</button>
+      </div>
+    )
+  }
+}
 
 
 ReactDOM.render(
