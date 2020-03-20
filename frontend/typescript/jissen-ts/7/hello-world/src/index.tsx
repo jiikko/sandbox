@@ -6,6 +6,7 @@ import Tbody from './tbody'
 import { Counter } from './useStateComponent'
 import { Component as Memo } from './useMemo'
 import { Container as UseCallbackComponent } from './useCallback'
+import { Component as UseEffectComponent } from "./useEffect"
 
 import ReactDOM from 'react-dom';
 
@@ -19,6 +20,7 @@ const Component: React.FC = () => (
     <Counter />
     <Memo />
     <UseCallbackComponent />
+    <UseEffectComponent />
   </div>
 )
 
