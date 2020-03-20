@@ -4,6 +4,7 @@ import { rows } from './data'
 import Thead from './thead'
 import Tbody from './tbody'
 import { Counter } from './useStateComponent'
+import { Component as Memo } from './useMemo'
 
 import ReactDOM from 'react-dom';
 
@@ -15,6 +16,7 @@ const Component: React.FC = () => (
       <Tbody rows={rows} />
     </table>
     <Counter />
+    <Memo />
   </div>
 )
 
