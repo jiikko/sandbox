@@ -5,6 +5,7 @@ import Thead from './thead'
 import Tbody from './tbody'
 import { Counter } from './useStateComponent'
 import { Component as Memo } from './useMemo'
+import { Container as UseCallbackComponent } from './useCallback'
 
 import ReactDOM from 'react-dom';
 
@@ -17,9 +18,8 @@ const Component: React.FC = () => (
     </table>
     <Counter />
     <Memo />
+    <UseCallbackComponent />
   </div>
 )
-
-// export default Component
 
 ReactDOM.render(<Component />, document.getElementById('root'));
