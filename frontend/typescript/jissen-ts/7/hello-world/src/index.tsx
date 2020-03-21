@@ -9,6 +9,7 @@ import { Container as UseCallbackComponent } from './useCallback'
 import { Component as UseEffectComponent } from "./useEffect"
 import { Component as UseRefComponent } from "./useRef"
 import { Component as UseReducerComponent } from "./useReducer"
+import { Container as TryReducer } from "./tryReducer"
 
 import ReactDOM from 'react-dom';
 
@@ -25,6 +26,7 @@ const Component: React.FC = () => (
     <UseEffectComponent />
     <UseRefComponent />
     <UseReducerComponent />
+    <TryReducer />
   </div>
 )
 
