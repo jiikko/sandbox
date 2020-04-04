@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import { app } from './reducers';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
 class Square extends React.Component {
   render() {
@@ -47,14 +47,36 @@ class Board extends React.Component {
 
 class Game extends React.Component {
   render() {
+    const history = this.props.history;
+    const current = history[this.props.stepNumber];
+    const winner = calculateWinner(current.squares);
+
+    const moves = history.map((step, move) => {
+      const desc = move ? `Go to move #` + move : "Go to game start";
+      return (
+        <li key={move}>
+          <button onClick={() => this.props.jumpTo(move)}>{desc}</button>
+        </li>
+      );
+    });
+
+    let status;
+    if(winner) {
+      status = "Winner: " + winner;
+    } else {
+      status = "Next player: " + (this.props.xIsNext ? "x" : "o");
+    }
+
     return (
       <div className="game">
         <div className="game-board">
-          <Board />
+          <Board squares={current.squares}
+            onClick={i => this.props.handleClick(i)}
+          />
         </div>
         <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
+          <div>{status}</div>
+          <ol>{moves}</ol>
         </div>
       </div>
     );
@@ -63,6 +85,7 @@ class Game extends React.Component {
 
 // ========================================
 
+const store = createStore(app);
 ReactDOM.render(
   <Game />,
   document.getElementById('root')
