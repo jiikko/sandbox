@@ -1,8 +1,6 @@
 import * as creators from "./tryReducer/actionCreators"
 import * as types from "./tryReducer/actionTypes"
 
-
-
 import React, {
   useReducer,
   useMemo,
@@ -41,6 +39,16 @@ function reducer(state: State, action: Actions): State {
     default:
       throw new Error()
   }
+}
+
+export function increment() {
+  return { type: types.INCREMENT }
+}
+export function decrement() {
+  return { type: types.DECREMENT }
+}
+export function setCount(amount: number) {
+  return { type: types.SET_COUNT, payload: { amount } }
 }
 
 type Props = {
