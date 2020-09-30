@@ -1,20 +1,20 @@
 import React from 'react';
 import logo from './logo.svg';
+import { withRouter } from 'react-router'
 import './App.css';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+
+const About = () => <h1 className='testTarget'>これです</h1>
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Router>
-          <p>Learn React1</p>
-          <Route path='/a' >
-            <p>ffo</p>
-          </Route>
-        </Router>
-      </header>
+      <p>Learn React1({1 + 3})</p>
+      <BrowserRouter>
+        <Switch>
+          <Route path='/a' component={About} exact />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
