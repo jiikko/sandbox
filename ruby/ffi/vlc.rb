@@ -13,7 +13,9 @@ require 'ffi'
 module VLC
   extend FFI::Library
   ffi_lib 'vlc'
-  attach_function :libvlc_get_version, [], :string
+  # ffi_lib '/usr/local/Caskroom/vlc/3.0.11.1/VLC.app/Contents/MacOS/lib/libvlc.dylib'
+  # ffi_lib '/usr/local/Caskroom/vlc/3.0.11.1/VLC.app/Contents/MacOS/lib/libvlc.ylib'
+  attach_function :get_version, :libvlc_get_version, [], :string
   attach_function :new, :libvlc_new, [:int, :int], :pointer
   attach_function :libvlc_media_new_path, [:pointer, :string], :pointer
   attach_function :libvlc_media_player_new_from_media, [:pointer], :pointer
@@ -23,7 +25,7 @@ module VLC
   attach_function :pause, :libvlc_media_player_pause, [:pointer], :int
 end
 
-puts VLC.libvlc_get_version
+puts VLC.get_version
 
 def run
   vlc    = VLC.new(0, 0)
