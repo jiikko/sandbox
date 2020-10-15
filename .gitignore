@@ -2,3 +2,4 @@
 mruby/mruby
 vendor
 .terraform
+.envrc
