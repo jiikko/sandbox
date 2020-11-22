@@ -19,28 +19,24 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_pattern" translatesAutoresizingMaskIntoConstraints="NO" id="bem-md-BYm">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iCg-wG-sj2">
-                                <rect key="frame" x="20" y="125" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iCg-wG-sj2">
+                                <rect key="frame" x="52" y="293" width="150" height="150"/>
                                 <state key="normal" image="cymbal"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2YG-Ph-x5E">
-                                <rect key="frame" x="244" y="103" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2YG-Ph-x5E">
+                                <rect key="frame" x="212" y="293" width="150" height="150"/>
                                 <state key="normal" image="guitar"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yb9-rn-nik">
-                                <rect key="frame" x="41" y="554" width="156" height="71"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yb9-rn-nik">
+                                <rect key="frame" x="99.5" y="504" width="55" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Play">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7l8-Wj-dd7">
-                                <rect key="frame" x="273" y="554" width="61" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7l8-Wj-dd7">
+                                <rect key="frame" x="256.5" y="504" width="61" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Stop">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -52,7 +48,15 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="bem-md-BYm" secondAttribute="trailing" id="69b-6P-3kw"/>
                             <constraint firstItem="bem-md-BYm" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="IVI-AC-7bZ"/>
+                            <constraint firstItem="Yb9-rn-nik" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="80" id="KKY-Qy-e6e"/>
                             <constraint firstItem="bem-md-BYm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="QFY-69-taj"/>
+                            <constraint firstItem="7l8-Wj-dd7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="80" id="U0s-wA-NSa"/>
+                            <constraint firstItem="iCg-wG-sj2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-80" id="Vs1-zG-03R"/>
+                            <constraint firstItem="2YG-Ph-x5E" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-80" id="Yf3-Q5-gZY"/>
+                            <constraint firstItem="2YG-Ph-x5E" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="80" id="dR4-ts-HRZ"/>
+                            <constraint firstItem="iCg-wG-sj2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-80" id="dTm-tH-stn"/>
+                            <constraint firstItem="7l8-Wj-dd7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="80" id="gEH-Wa-bMs"/>
+                            <constraint firstItem="Yb9-rn-nik" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-80" id="jjh-qp-rlA"/>
                             <constraint firstAttribute="bottom" secondItem="bem-md-BYm" secondAttribute="bottom" id="pjy-MQ-ZyR"/>
                         </constraints>
                     </view>
