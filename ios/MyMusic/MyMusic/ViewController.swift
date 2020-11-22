@@ -24,30 +24,24 @@ class ViewController: UIViewController {
     }
     
     @IBAction func play(_ sender: Any) {
-        do {
-            bgmPlayer = try AVAudioPlayer(contentsOf: bgmPath, fileTypeHint: nil)
-            bgmPlayer.numberOfLoops = -1
-            bgmPlayer.play()
-        } catch {
-            print(" エラーです ")
-        }
+        soundPlayer(player: &bgmPlayer, path:bgmPath, count: -1)
     }
     
     @IBAction func guitar(_ sender: Any) {
-        do {
-            guitarPlayer = try AVAudioPlayer(contentsOf: guitarPath, fileTypeHint: nil)
-            guitarPlayer.play()
-        } catch {
-            print(" エラーです ")
-        }
+        soundPlayer(player: &guitarPlayer, path:guitarPath, count: 0)
     }
 
     @IBAction func cymbal(_ sender: Any) {
+        soundPlayer(player: &cymbalPlayer, path:cymbalPath, count: 0)
+    }
+    
+    fileprivate func soundPlayer(player:inout AVAudioPlayer!, path: URL, count: Int) {
         do {
-            cymbalPlayer = try AVAudioPlayer(contentsOf: cymbalPath, fileTypeHint: nil)
-            cymbalPlayer.play()
+            player = try AVAudioPlayer(contentsOf: path, fileTypeHint:  nil)
+            player.numberOfLoops = count
+            player.play()
         } catch {
-            print(" エラーです ")
+            print("error ocorret!!!!!")
         }
     }
 
