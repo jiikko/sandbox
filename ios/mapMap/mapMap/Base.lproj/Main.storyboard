@@ -16,15 +16,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="hb2-wy-smO">
-                                <rect key="frame" x="141" y="44" width="97" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="hb2-wy-smO">
+                                <rect key="frame" x="0.0" y="44" width="414" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="D5h-2W-cjb"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
                             </textField>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0yJ-W2-Ccg">
+                                <rect key="frame" x="0.0" y="78" width="414" height="784"/>
+                            </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hb2-wy-smO" secondAttribute="trailing" id="3gE-1e-fuz"/>
+                            <constraint firstItem="0yJ-W2-Ccg" firstAttribute="top" secondItem="hb2-wy-smO" secondAttribute="bottom" id="6tU-GJ-ORI"/>
+                            <constraint firstItem="0yJ-W2-Ccg" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="M3W-10-iQV"/>
+                            <constraint firstItem="hb2-wy-smO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OPg-tz-E88"/>
+                            <constraint firstItem="0yJ-W2-Ccg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Po6-WY-5fa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0yJ-W2-Ccg" secondAttribute="bottom" id="QYU-VW-IuT"/>
+                            <constraint firstItem="hb2-wy-smO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Ya1-75-HRi"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
