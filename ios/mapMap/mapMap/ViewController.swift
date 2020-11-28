@@ -8,18 +8,23 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var inputText: UITextField!
-    
     @IBOutlet weak var dispMap: MKMapView!
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        inputText.delegate = self
     }
 
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // キーボードを閉じる
+        if let searchKey = textField.text {
+            print(searchKey)
+        }
+        return true
+    }
 }
 
