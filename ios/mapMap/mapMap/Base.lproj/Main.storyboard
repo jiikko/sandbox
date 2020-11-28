@@ -40,6 +40,10 @@
                             <constraint firstItem="hb2-wy-smO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Ya1-75-HRi"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="dispMap" destination="0yJ-W2-Ccg" id="BRs-sn-h5i"/>
+                        <outlet property="inputText" destination="hb2-wy-smO" id="DUk-Ex-naj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
