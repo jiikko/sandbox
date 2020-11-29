@@ -23,6 +23,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder() // キーボードを閉じる
         if let searchKey = textField.text {
             print(searchKey)
+            
+            let geocoder = CLGeocoder()
+            geocoder.geocodeAddressString(searchKey, completionHandler: { (placemarks, error) in
+                if let unwnrapPlacemarks = placemarks {
+                    if let firstPlacemark = unwnrapPlacemarks.first {
+                        if let location = firstPlacemark.location {
+                            let targetCoordinate = location.coordinate
+                            print(targetCoordinate)
+                            
+                            let pin = MKPointAnnotation()
+                            pin.coordinate = targetCoordinate
+                            pin.title = searchKey
+                            self.dispMap.addAnnotation(pin)
+                            self.dispMap.region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 500.0, longitudinalMeters: 500.0)
+                        }
+                    }
+                }
+            })
         }
         return true
     }
