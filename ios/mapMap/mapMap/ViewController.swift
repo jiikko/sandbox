@@ -12,7 +12,22 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var inputText: UITextField!
     @IBOutlet weak var dispMap: MKMapView!
-
+    @IBAction func changeMapButton(_ sender: Any) {
+        if dispMap.mapType == .standard {
+            dispMap.mapType = .satellite
+        } else if dispMap.mapType == .satellite {
+            dispMap.mapType = .hybrid
+        } else if dispMap.mapType == .hybrid {
+            dispMap.mapType = .satelliteFlyover
+        } else if dispMap.mapType == .satelliteFlyover {
+            dispMap.mapType = .hybridFlyover
+        } else if dispMap.mapType == .hybridFlyover {
+            dispMap.mapType = .mutedStandard
+        } else {
+            dispMap.mapType = .standard
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
