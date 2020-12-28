@@ -1,4 +1,5 @@
 require 'active_support'
+require 'pry'
 
 class Animal
   include ActiveSupport::Callbacks
@@ -12,12 +13,24 @@ class Animal
   end
 end
 
+module DSL
+  def before_sleep(&block)
+    set_callback(:sleep, :before, &block)
+  end
+
+  def after_sleep(&block)
+    set_callback(:sleep, :after, &block)
+  end
+end
+
 class Cat < Animal
-  set_callback(:sleep, :before) do
+  extend DSL
+
+  before_sleep do
     puts '寝るようです'
   end
 
-  set_callback(:sleep, :after) do
+  after_sleep do
     puts '寝ました'
   end
 end
