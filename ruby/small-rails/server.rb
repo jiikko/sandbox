@@ -7,6 +7,9 @@ class Application
   end
 end
 
+
+app = Application.new
+
 port = 3000
 server = TCPServer.open port
 puts "start!"
@@ -26,8 +29,6 @@ loop do
       PATH_INFO: match[:path],
       HTTP_VERSION: match[:ver],
     }
-
-    app = Application.new
     response = app.call(env)
 
     status = response[0]
