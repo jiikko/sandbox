@@ -1,14 +1,49 @@
 require 'socket'
 require 'pry'
 
-class Application
+class UsersController; end
+class ShopsController; end
+
+class RackRouter
+  def initialize
+    @table = {
+      "users" => {
+        'new' => { :this => [UsersController, :new] },
+        :this => [UsersController, :index],
+      },
+      'shops' => {
+        'new' => { :this => [ShopsController, :new] },
+        :this => [ShopsController, :new],
+      }
+    }
+
+  end
+
   def call(env)
-    [200, {}, ["hellow #{Time.now.to_i}"]]
+    find_route(env[:PATH_INFO], @table) do |controller, name|
+      [200, {}, ["Found #{controller}"]]
+    end
+  end
+
+  private
+
+  def find_route(path, table)
+    controller, action = path.split("/").drop(1).inject(table) { |t, name|
+      t[name]
+    }[:this]
+    yield(controller, action)
   end
 end
 
+# あとで時間を記録する
+class Timer
+  def initialize(next_app)
+  end
+end
 
-app = Application.new
+app = RackRouter.new
+
+
 
 port = 3000
 server = TCPServer.open port
