@@ -1,8 +1,63 @@
 require 'socket'
 require 'pry'
 
-class UsersController; end
-class ShopsController; end
+module ApplicationController
+  class DoubleRenderingError < StandardError; end
+  class TemplateNotFound < StandardError; end
+
+  class Base
+    def render_action(action_name)
+      if respond_to?(action_name)
+        send action_name
+      end
+
+      # unless rendered_something?
+      #   render_template action_name
+      # end
+
+      [200, {}, [render_body]]
+    rescue TemplateNotFound
+      [500, {}, ['templateが見つかりませんでした']]
+    rescue DoubleRenderingError
+      [500, {}, ['renderingが2重で呼ばれました']]
+    end
+
+    def render_template
+      # TODO
+    end
+
+    def render(text: nil)
+      raise DoubleRendering if @render_body
+
+      if text
+        @render_body = text
+      end
+    end
+
+    def render_body
+      unless @render_body
+        raise TemplateNotFound
+      end
+      @render_body
+    end
+
+    def rendered_something?
+      !!@render_body
+    end
+  end
+end
+
+class UsersController < ApplicationController::Base
+  def new
+    render text: 'users new'
+  end
+end
+
+class ShopsController < ApplicationController::Base
+  def new
+    render text: 'foo'
+  end
+end
 
 class RackRouter
   def initialize
@@ -21,7 +76,9 @@ class RackRouter
 
   def call(env)
     find_route(env[:PATH_INFO], @table) do |controller, name|
-      [200, {}, ["Found #{controller}"]]
+      instance = controller.new
+      status, headers, body = instance.render_action name
+      [status, headers, body]
     end
   end
 
