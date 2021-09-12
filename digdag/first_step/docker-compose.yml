@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  digdag:
+    build:
+      context: .
+    ports:
+      - "65432:65432"
+    volumes:
+      - .:/src
+    command: ["bash"]

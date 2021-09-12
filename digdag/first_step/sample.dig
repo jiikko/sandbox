@@ -1,0 +1,10 @@
+timezone: Asia/Tokyo
+
+schedule:
+  cron>: 1,10,20,40,41,42,50 * * * *
+
++disp_current_date:
+  echo>: ${moment(session_time).format('YYYY-MM-DD HH:mm:ss Z')}
+
++shell:
+  sh>: /src/sample.sh
